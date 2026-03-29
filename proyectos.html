@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VEF Automatización | Solicita tu Cotización</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Segoe+UI:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+<style>
+/* ── Estilos específicos de proyectos ── */
+.projects-hero {
+    background: linear-gradient(135deg, var(--primary-dark), var(--primary-medium));
+    padding: 160px 20px 80px;
+    text-align: center;
+    color: var(--white);
+    position: relative;
+    overflow: hidden;
+}
+.projects-hero::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 0 L60 30 L30 60 L0 30 Z' fill='rgba(255,255,255,0.03)'/%3E%3C/svg%3E");
+    opacity:.12;
+}
+.projects-hero h1 { font-size:3rem; margin-bottom:1rem; position:relative; }
+.projects-hero p { font-size:1.15rem; max-width:700px; margin:0 auto; opacity:.9; position:relative; }
+
+/* info cards strip */
+.info-strip {
+    background: var(--white);
+    padding: 40px 0;
+    box-shadow: 0 4px 20px rgba(10,42,41,.06);
+}
+.info-strip-grid {
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    gap: 25px;
+    max-width: 900px; margin: 0 auto; padding: 0 20px;
+}
+.info-chip {
+    display: flex; align-items: center; gap: 15px;
+    background: var(--neutral-light);
+    border-radius: 12px; padding: 18px 22px;
+    border-left: 4px solid var(--primary-light);
+    transition: var(--transition);
+}
+.info-chip:hover { transform: translateY(-3px); box-shadow: var(--shadow); }
+.info-chip-icon { font-size: 1.8rem; }
+.info-chip-text strong { display:block; color:var(--primary-dark); font-size:.95rem; }
+.info-chip-text span { font-size:.82rem; color:var(--primary-medium); }
+
+/* quote layout */
+.quote-section {
+    padding: 60px 0 80px;
+    background: var(--neutral-light);
+}
+.quote-layout {
+    display: grid;
+    grid-template-columns: 1fr 1.6fr;
+    gap: 35px;
+    max-width: 1100px; margin: 0 auto; padding: 0 20px;
+}
+
+/* side info */
+.quote-side {
+    background: var(--white);
+    border-radius: 20px;
+    padding: 35px;
+    box-shadow: var(--shadow);
+    height: fit-content;
+}
+.quote-side h2 {
+    color: var(--primary-dark);
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+}
+.quote-side p {
+    color: var(--neutral-dark);
+    font-size: .95rem;
+    line-height: 1.7;
+    margin-bottom: 1.5rem;
+    opacity: .85;
+}
+.benefit-list { list-style: none; margin-bottom: 2rem; }
+.benefit-list li {
+    display: flex; align-items: flex-start; gap: 12px;
+    padding: .6rem 0;
+    font-size: .9rem;
+    color: var(--neutral-dark);
+    border-bottom: 1px solid var(--gray);
+}
+.benefit-list li:last-child { border-bottom: none; }
+.benefit-icon { color: var(--primary-light); font-size: 1.1rem; margin-top: 2px; flex-shrink: 0; }
+
+.contact-box {
+    background: var(--neutral-light);
+    border-radius: 12px;
+    padding: 20px;
+    border-left: 3px solid var(--primary-light);
+}
+.contact-box h3 { color: var(--primary-dark); font-size:1rem; margin-bottom:.8rem; }
+.contact-box a {
+    display: block;
+    color: var(--primary-medium);
+    text-decoration: none;
+    font-size: .88rem;
+    margin-bottom: .4rem;
+    transition: var(--transition);
+}
+.contact-box a:hover { color: var(--primary-dark); padding-left: 4px; }
+
+/* form card */
+.quote-form-card {
+    background: var(--white);
+    border-radius: 20px;
+    padding: 40px;
+    box-shadow: var(--shadow);
+}
+.form-card-header { margin-bottom: 2rem; padding-bottom: 1.5rem; border-bottom: 1px solid var(--gray); }
+.form-card-header h2 { color: var(--primary-dark); font-size: 1.8rem; margin-bottom: .4rem; }
+.form-card-header p { color: var(--neutral-dark); font-size: .9rem; opacity: .8; }
+
+.quote-form { display: flex; flex-direction: column; gap: 20px; }
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+.form-group { display: flex; flex-direction: column; gap: 7px; }
+.form-group label {
+    color: var(--primary-dark);
+    font-weight: 600;
+    font-size: .9rem;
+}
+.form-group label .req { color: #dc3545; margin-left: 3px; }
+.form-group input,
+.form-group select,
+.form-group textarea {
+    padding: 12px 15px;
+    border: 2px solid var(--gray);
+    border-radius: 10px;
+    font-size: 1rem;
+    font-family: inherit;
+    color: var(--neutral-dark);
+    background: var(--white);
+    transition: var(--transition);
+}
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: var(--primary-light);
+    box-shadow: 0 0 0 3px rgba(42,139,124,.12);
+}
+.form-group textarea { resize: vertical; min-height: 110px; }
+.form-group select { cursor: pointer; }
+
+.checkbox-wrap {
+    display: flex; align-items: flex-start; gap: 10px;
+    font-size: .88rem; color: var(--neutral-dark);
+}
+.checkbox-wrap input { width:18px; height:18px; margin-top:2px; cursor:pointer; accent-color: var(--primary-light); }
+.checkbox-wrap a { color: var(--primary-light); font-weight:600; text-decoration:none; }
+.checkbox-wrap a:hover { text-decoration: underline; }
+
+.btn-submit-full {
+    width: 100%;
+    padding: 16px;
+    background: linear-gradient(135deg, var(--primary-light), var(--primary-medium));
+    color: var(--white);
+    border: none;
+    border-radius: 50px;
+    font-size: 1.1rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: var(--transition);
+    letter-spacing: .04em;
+}
+.btn-submit-full:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 15px 30px rgba(10,42,41,.25);
+}
+
+.form-feedback {
+    display: none;
+    padding: 14px 18px;
+    border-radius: 10px;
+    font-size: .9rem;
+    margin-top: .5rem;
+}
+.form-feedback.success {
+    display: block;
+    background: #d4edda; color: #155724;
+    border: 1px solid #c3e6cb;
+}
+.form-feedback.error {
+    display: block;
+    background: #f8d7da; color: #721c24;
+    border: 1px solid #f5c6cb;
+}
+
+/* terms modal */
+.terms-modal {
+    display: none;
+    position: fixed; inset: 0;
+    background: rgba(10,42,41,.6);
+    z-index: 2000;
+    align-items: center; justify-content: center;
+}
+.terms-modal.open { display: flex; }
+.terms-box {
+    background: var(--white);
+    border-radius: 20px;
+    padding: 40px;
+    max-width: 550px; width: 90%;
+    box-shadow: 0 30px 60px rgba(10,42,41,.3);
+}
+.terms-box h3 { color: var(--primary-dark); margin-bottom: 1rem; font-size: 1.4rem; }
+.terms-box p { color: var(--neutral-dark); line-height: 1.7; margin-bottom: 1.5rem; font-size: .95rem; }
+.terms-close {
+    background: var(--primary-light);
+    color: var(--white);
+    border: none;
+    padding: 12px 30px;
+    border-radius: 50px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: var(--transition);
+}
+.terms-close:hover { background: var(--primary-medium); }
+
+@media(max-width:768px){
+    .projects-hero h1 { font-size: 2rem; }
+    .info-strip-grid { grid-template-columns: 1fr; }
+    .quote-layout { grid-template-columns: 1fr; }
+    .form-row { grid-template-columns: 1fr; }
+    .quote-form-card { padding: 25px; }
+    .quote-side { order: 2; }
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="header">
+    <nav class="navbar">
+        <a href="index.html" class="logo-container">
+            <img src="assets/VEF.png" alt="VEF Automatización">
+            <span class="slogan">Engineering the Future</span>
+        </a>
+        <ul class="nav-menu" id="navMenu">
+            <li><a href="index.html">Inicio</a></li>
+            <li><a href="proyectos.html" class="active">Proyectos</a></li>
+            <li><a href="index.html#valores">Misión y Valores</a></li>
+            <li><a href="index.html#contacto">Contacto</a></li>
+            <li class="dropdown">
+                <a href="#" class="dropbtn">Más ▾</a>
+                <div class="dropdown-content">
+                    <a href="index.html#servicios">Servicios</a>
+                    <a href="index.html#legacy">Sistemas Legacy</a>
+                    <a href="proyectos.html">Cotización</a>
+                </div>
+            </li>
+        </ul>
+        <button class="hamburger" id="hamburger" aria-label="Menú">
+            <span class="bar"></span><span class="bar"></span><span class="bar"></span>
+        </button>
+    </nav>
+</header>
+
+<!-- HERO -->
+<section class="projects-hero">
+    <h1>Solicita tu Cotización</h1>
+    <p>Completa el formulario y en menos de 24 horas te enviaremos una propuesta personalizada para tu proyecto de automatización.</p>
+</section>
+
+<!-- INFO STRIP -->
+<div class="info-strip">
+    <div class="info-strip-grid">
+        <div class="info-chip">
+            <span class="info-chip-icon">⚡</span>
+            <div class="info-chip-text">
+                <strong>Respuesta en 24h</strong>
+                <span>Propuesta técnica personalizada</span>
+            </div>
+        </div>
+        <div class="info-chip">
+            <span class="info-chip-icon">🔒</span>
+            <div class="info-chip-text">
+                <strong>Datos confidenciales</strong>
+                <span>Tu arquitectura es tu activo</span>
+            </div>
+        </div>
+        <div class="info-chip">
+            <span class="info-chip-icon">🎯</span>
+            <div class="info-chip-text">
+                <strong>Sin costo</strong>
+                <span>Asesoría técnica incluida</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- FORMULARIO -->
+<section class="quote-section">
+    <div class="quote-layout">
+
+        <!-- Columna izquierda: info -->
+        <div class="quote-side reveal">
+            <h2>¿Por qué cotizar con VEF?</h2>
+            <p>No solo enviamos un número — te entregamos una solución integral basada en años de experiencia en el sector industrial.</p>
+            <ul class="benefit-list">
+                <li><span class="benefit-icon">✓</span> Asesoría técnica especializada sin costo</li>
+                <li><span class="benefit-icon">✓</span> Propuesta en máximo 24 horas hábiles</li>
+                <li><span class="benefit-icon">✓</span> Ingeniero asignado con experiencia en tu plataforma</li>
+                <li><span class="benefit-icon">✓</span> Soporte multi-plataforma: Siemens, Rockwell, CODESYS, Bosch</li>
+                <li><span class="benefit-icon">✓</span> Expertos en sistemas legacy y obsoletos</li>
+                <li><span class="benefit-icon">✓</span> Estudio de ROI detallado incluido</li>
+            </ul>
+            <div class="contact-box">
+                <h3>📞 Atención Inmediata</h3>
+                <a href="https://wa.me/527221157792">📱 +52 (722) 1157792 WhatsApp</a>
+                <a href="mailto:soporte.ventas@vef-automatizacion.com">✉ Soporte.Ventas@vef-automatizacion.com</a>
+                <a href="mailto:erikagonzalez@vef-automatizacion.com">✉ erikagonzalez@vef-automatizacion.com</a>
+            </div>
+        </div>
+
+        <!-- Columna derecha: formulario -->
+        <div class="quote-form-card reveal">
+            <div class="form-card-header">
+                <h2>Formulario de Cotización</h2>
+                <p>Completa todos los campos para recibir una propuesta a la medida de tus necesidades.</p>
+            </div>
+
+            <form class="quote-form" id="quoteForm" novalidate>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Nombre completo <span class="req">*</span></label>
+                        <input type="text" id="nombre" placeholder="Ing. Juan García" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Empresa <span class="req">*</span></label>
+                        <input type="text" id="empresa" placeholder="Industrias Ejemplo S.A." required>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Correo electrónico <span class="req">*</span></label>
+                        <input type="email" id="email" placeholder="tu@empresa.com" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Teléfono / WhatsApp</label>
+                        <input type="tel" id="telefono" placeholder="+52 722 123 4567">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Software / Plataforma que utilizas <span class="req">*</span></label>
+                    <input type="text" id="software" placeholder="Ej: Siemens TIA Portal, CODESYS, Rockwell Studio 5000..." required>
+                </div>
+
+                <div class="form-group">
+                    <label>Tipo de servicio requerido <span class="req">*</span></label>
+                    <select id="servicio" required>
+                        <option value="">— Selecciona una opción —</option>
+                        <option>Consultoría en Automatización Industrial</option>
+                        <option>Construcción de Tableros Eléctricos</option>
+                        <option>Integración de Sistemas PLC/SCADA/HMI</option>
+                        <option>Capacitación Técnica Especializada</option>
+                        <option>Mantenimiento Predictivo Digital</option>
+                        <option>Sistemas Legacy / Equipos Obsoletos</option>
+                        <option>Otro / Proyecto integral</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Plazo estimado de implementación</label>
+                    <select id="plazo">
+                        <option value="">— Selecciona un plazo —</option>
+                        <option>Urgente — menos de 1 mes</option>
+                        <option>Corto plazo — 1 a 3 meses</option>
+                        <option>Mediano plazo — 3 a 6 meses</option>
+                        <option>Largo plazo — más de 6 meses</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Describe el alcance de tu proyecto <span class="req">*</span></label>
+                    <textarea id="alcance" placeholder="Detalla los requerimientos: tipo de automatización, módulos de medición, protocolos de comunicación, equipos involucrados, entregables esperados..." required></textarea>
+                </div>
+
+                <div class="checkbox-wrap">
+                    <input type="checkbox" id="terminos" required>
+                    <label for="terminos">
+                        Acepto los <a href="#" id="openTerms">términos y condiciones</a> de VEF Automatización y autorizo el uso de mis datos para fines comerciales.
+                    </label>
+                </div>
+
+                <button type="submit" class="btn-submit-full">Enviar Solicitud →</button>
+                <div class="form-feedback" id="formFeedback"></div>
+            </form>
+        </div>
+    </div>
+</section>
+
+<!-- MODAL TÉRMINOS -->
+<div class="terms-modal" id="termsModal">
+    <div class="terms-box">
+        <h3>Términos y Condiciones</h3>
+        <p>Al enviar este formulario, autorizas a VEF Automatización a contactarte para dar seguimiento a tu solicitud. Tus datos serán tratados con confidencialidad y únicamente con fines comerciales relacionados con tu proyecto de automatización industrial. No compartimos tu información con terceros. Para más información consulta nuestro Aviso de Privacidad.</p>
+        <button class="terms-close" id="closeTerms">Entendido</button>
+    </div>
+</div>
+
+<!-- FOOTER -->
+<footer class="footer">
+    <div class="container">
+        <div class="footer-grid">
+            <div>
+                <div class="footer-logo-wrap">
+                    <img src="assets/VEF.png" alt="VEF">
+                    <span class="footer-brand">VEF Automatización</span>
+                </div>
+                <p class="footer-tagline">"Control Preciso. Resultados Medibles."</p>
+                <p class="footer-contact-item">✉ <a href="mailto:soporte.ventas@vef-automatizacion.com">Soporte.Ventas@vef-automatizacion.com</a></p>
+                <p class="footer-contact-item">✉ <a href="mailto:erikagonzalez@vef-automatizacion.com">erikagonzalez@vef-automatizacion.com</a></p>
+                <p class="footer-contact-item">📱 <a href="https://wa.me/527221157792">+52 (722) 1157792 WhatsApp</a></p>
+            </div>
+            <div class="footer-col">
+                <h5>Navegación</h5>
+                <ul>
+                    <li><a href="index.html">Inicio</a></li>
+                    <li><a href="index.html#mision">Misión & Visión</a></li>
+                    <li><a href="index.html#servicios">Servicios</a></li>
+                    <li><a href="index.html#legacy">Sistemas Legacy</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h5>Servicios</h5>
+                <ul>
+                    <li><a href="index.html#servicios">Consultoría PLC</a></li>
+                    <li><a href="index.html#servicios">Tableros Eléctricos</a></li>
+                    <li><a href="index.html#servicios">Integración SCADA</a></li>
+                    <li><a href="index.html#legacy">Sistemas Legacy</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h5>Empresa</h5>
+                <ul>
+                    <li><a href="#">LinkedIn</a></li>
+                    <li><a href="#">GitHub Industrial</a></li>
+                    <li><a href="#">Aviso de Privacidad</a></li>
+                    <li><a href="#">Términos y Condiciones</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <span class="footer-copy">&copy; 2026 VEF Automatización. Todos los derechos reservados.</span>
+            <span class="footer-copy">Especialistas en PLC · CODESYS · Industria 4.0 · Toluca, México</span>
+        </div>
+    </div>
+</footer>
+
+<script src="js/main.js"></script>
+<script>
+// Formulario
+document.getElementById('openTerms').addEventListener('click', e => {
+    e.preventDefault();
+    document.getElementById('termsModal').classList.add('open');
+});
+document.getElementById('closeTerms').addEventListener('click', () => {
+    document.getElementById('termsModal').classList.remove('open');
+});
+document.getElementById('termsModal').addEventListener('click', e => {
+    if (e.target === e.currentTarget) e.currentTarget.classList.remove('open');
+});
+
+document.getElementById('quoteForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    const fb = document.getElementById('formFeedback');
+    const nombre  = document.getElementById('nombre').value.trim();
+    const empresa = document.getElementById('empresa').value.trim();
+    const email   = document.getElementById('email').value.trim();
+    const software= document.getElementById('software').value.trim();
+    const servicio= document.getElementById('servicio').value;
+    const alcance = document.getElementById('alcance').value.trim();
+    const terminos= document.getElementById('terminos').checked;
+    const telefono= document.getElementById('telefono').value.trim();
+    const plazo   = document.getElementById('plazo').value;
+
+    if (!nombre || !empresa || !email || !software || !servicio || !alcance) {
+        fb.className = 'form-feedback error';
+        fb.textContent = 'Por favor completa todos los campos requeridos (*)';
+        return;
+    }
+    if (!terminos) {
+        fb.className = 'form-feedback error';
+        fb.textContent = 'Debes aceptar los términos y condiciones.';
+        return;
+    }
+
+    const asunto = encodeURIComponent(`Cotización — ${empresa} | ${servicio}`);
+    const cuerpo = encodeURIComponent(
+        `Nombre: ${nombre}\n` +
+        `Empresa: ${empresa}\n` +
+        `Email: ${email}\n` +
+        `Teléfono: ${telefono || 'No proporcionado'}\n` +
+        `Software/Plataforma: ${software}\n` +
+        `Servicio requerido: ${servicio}\n` +
+        `Plazo: ${plazo || 'No especificado'}\n\n` +
+        `Alcance del proyecto:\n${alcance}`
+    );
+    window.location.href = `mailto:erikagonzalez@vef-automatizacion.com;soporte.ventas@vef-automatizacion.com?subject=${asunto}&body=${cuerpo}`;
+
+    fb.className = 'form-feedback success';
+    fb.textContent = '✓ Correo preparado. Revisa tu cliente de correo para enviarlo.';
+});
+</script>
+</body>
+</html>
