@@ -6,13 +6,106 @@
 <title>VEF Automatización | Solicita tu Cotización</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Segoe+UI:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/Style.css">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
-/* ── Estilos específicos de proyectos ── */
+/* ════════════════════════════════════════
+   VEF — PROYECTOS / COTIZACIÓN — CSS RESPONSIVO
+════════════════════════════════════════ */
+:root {
+    --primary-dark:   #0a2a29;
+    --primary-medium: #1a5c58;
+    --primary-light:  #2a8b7c;
+    --white:          #ffffff;
+    --neutral-light:  #f4f7f6;
+    --neutral-dark:   #2d3748;
+    --gray:           #e2e8f0;
+    --shadow:         0 8px 32px rgba(10,42,41,0.12);
+    --transition:     all 0.25s ease;
+    --radius:         14px;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+    font-family: 'Inter', system-ui, sans-serif;
+    color: var(--neutral-dark);
+    background: var(--white);
+    line-height: 1.6;
+    overflow-x: hidden;
+}
+img { max-width: 100%; height: auto; display: block; }
+a { color: inherit; text-decoration: none; }
+ul { list-style: none; }
+
+.container {
+    width: 100%;
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 0 clamp(1rem, 4vw, 2.5rem);
+}
+
+/* ════ HEADER ════ */
+.header {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 1000;
+    background: rgba(10,42,41,0.97);
+    backdrop-filter: blur(14px);
+    box-shadow: 0 2px 20px rgba(10,42,41,0.1);
+}
+.navbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 68px;
+    padding: 0 clamp(1rem, 4vw, 2.5rem);
+    max-width: 1280px;
+    margin: 0 auto;
+}
+.logo-container {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    text-decoration: none;
+    flex-shrink: 0;
+}
+.logo-container img { height: 40px; width: auto; object-fit: contain; }
+.slogan { font-size: 0.78rem; font-weight: 500; color: rgba(255,255,255,0.6); letter-spacing: 0.06em; text-transform: uppercase; }
+.nav-menu {
+    display: flex;
+    align-items: center;
+    gap: 0.15rem;
+    list-style: none;
+}
+.nav-menu a {
+    color: rgba(255,255,255,0.8);
+    font-size: 0.88rem;
+    font-weight: 500;
+    padding: 0.45rem 0.85rem;
+    border-radius: 6px;
+    transition: var(--transition);
+    white-space: nowrap;
+}
+.nav-menu a:hover { color: #fff; background: rgba(255,255,255,0.1); }
+.hamburger {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 8px;
+    border-radius: 6px;
+}
+.bar { width: 24px; height: 2px; background: #fff; border-radius: 2px; transition: all 0.3s; display: block; }
+.hamburger.active .bar:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.hamburger.active .bar:nth-child(2) { opacity: 0; }
+.hamburger.active .bar:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+/* ════ PROJECTS HERO ════ */
 .projects-hero {
     background: linear-gradient(135deg, var(--primary-dark), var(--primary-medium));
-    padding: 160px 20px 80px;
+    padding: clamp(7rem, 15vw, 10rem) clamp(1rem, 5vw, 2rem) clamp(3rem, 6vw, 5rem);
     text-align: center;
     color: var(--white);
     position: relative;
@@ -22,126 +115,129 @@
     content: '';
     position: absolute; inset: 0;
     background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 0 L60 30 L30 60 L0 30 Z' fill='rgba(255,255,255,0.03)'/%3E%3C/svg%3E");
-    opacity:.12;
+    opacity: .12;
 }
-.projects-hero h1 { font-size:3rem; margin-bottom:1rem; position:relative; }
-.projects-hero p { font-size:1.15rem; max-width:700px; margin:0 auto; opacity:.9; position:relative; }
+.projects-hero h1 {
+    font-size: clamp(1.8rem, 5vw, 3rem);
+    margin-bottom: 1rem;
+    position: relative;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+}
+.projects-hero p {
+    font-size: clamp(1rem, 2vw, 1.15rem);
+    max-width: 700px;
+    margin: 0 auto;
+    opacity: .9;
+    position: relative;
+}
 
-/* info cards strip */
+/* ════ INFO STRIP ════ */
 .info-strip {
     background: var(--white);
-    padding: 40px 0;
+    padding: clamp(1.5rem, 4vw, 2.5rem) 0;
     box-shadow: 0 4px 20px rgba(10,42,41,.06);
 }
 .info-strip-grid {
     display: grid;
-    grid-template-columns: repeat(3,1fr);
-    gap: 25px;
-    max-width: 900px; margin: 0 auto; padding: 0 20px;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.2rem;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 clamp(1rem, 4vw, 2rem);
 }
 .info-chip {
-    display: flex; align-items: center; gap: 15px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
     background: var(--neutral-light);
-    border-radius: 12px; padding: 18px 22px;
+    border-radius: 12px;
+    padding: clamp(1rem, 3vw, 1.2rem) clamp(1rem, 3vw, 1.4rem);
     border-left: 4px solid var(--primary-light);
     transition: var(--transition);
 }
 .info-chip:hover { transform: translateY(-3px); box-shadow: var(--shadow); }
-.info-chip-icon { font-size: 1.8rem; }
-.info-chip-text strong { display:block; color:var(--primary-dark); font-size:.95rem; }
-.info-chip-text span { font-size:.82rem; color:var(--primary-medium); }
+.info-chip-icon { font-size: 1.6rem; flex-shrink: 0; }
+.info-chip-text strong { display: block; color: var(--primary-dark); font-size: .9rem; }
+.info-chip-text span { font-size: .78rem; color: var(--primary-medium); }
 
-/* quote layout */
+/* ════ QUOTE SECTION ════ */
 .quote-section {
-    padding: 60px 0 80px;
+    padding: clamp(2.5rem, 6vw, 4rem) 0 clamp(3rem, 8vw, 5rem);
     background: var(--neutral-light);
 }
 .quote-layout {
     display: grid;
     grid-template-columns: 1fr 1.6fr;
-    gap: 35px;
-    max-width: 1100px; margin: 0 auto; padding: 0 20px;
+    gap: 2.5rem;
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 clamp(1rem, 4vw, 2rem);
 }
 
-/* side info */
+/* ── Side info ── */
 .quote-side {
     background: var(--white);
     border-radius: 20px;
-    padding: 35px;
+    padding: clamp(1.5rem, 4vw, 2.2rem);
     box-shadow: var(--shadow);
     height: fit-content;
 }
-.quote-side h2 {
-    color: var(--primary-dark);
-    font-size: 1.5rem;
-    margin-bottom: 1rem;
-}
-.quote-side p {
-    color: var(--neutral-dark);
-    font-size: .95rem;
-    line-height: 1.7;
-    margin-bottom: 1.5rem;
-    opacity: .85;
-}
-.benefit-list { list-style: none; margin-bottom: 2rem; }
+.quote-side h2 { color: var(--primary-dark); font-size: clamp(1.2rem, 2.5vw, 1.5rem); margin-bottom: 0.8rem; font-weight: 700; }
+.quote-side p { color: var(--neutral-dark); font-size: .9rem; line-height: 1.7; margin-bottom: 1.2rem; opacity: .85; }
+.benefit-list { list-style: none; margin-bottom: 1.5rem; }
 .benefit-list li {
-    display: flex; align-items: flex-start; gap: 12px;
-    padding: .6rem 0;
-    font-size: .9rem;
+    display: flex; align-items: flex-start; gap: 10px;
+    padding: .55rem 0;
+    font-size: .88rem;
     color: var(--neutral-dark);
     border-bottom: 1px solid var(--gray);
 }
 .benefit-list li:last-child { border-bottom: none; }
-.benefit-icon { color: var(--primary-light); font-size: 1.1rem; margin-top: 2px; flex-shrink: 0; }
-
+.benefit-icon { color: var(--primary-light); font-size: 1rem; margin-top: 2px; flex-shrink: 0; }
 .contact-box {
     background: var(--neutral-light);
     border-radius: 12px;
-    padding: 20px;
+    padding: 1.2rem;
     border-left: 3px solid var(--primary-light);
 }
-.contact-box h3 { color: var(--primary-dark); font-size:1rem; margin-bottom:.8rem; }
+.contact-box h3 { color: var(--primary-dark); font-size: .95rem; margin-bottom: .7rem; }
 .contact-box a {
     display: block;
     color: var(--primary-medium);
-    text-decoration: none;
-    font-size: .88rem;
-    margin-bottom: .4rem;
+    font-size: .85rem;
+    margin-bottom: .35rem;
     transition: var(--transition);
 }
 .contact-box a:hover { color: var(--primary-dark); padding-left: 4px; }
 
-/* form card */
+/* ── Form card ── */
 .quote-form-card {
     background: var(--white);
     border-radius: 20px;
-    padding: 40px;
+    padding: clamp(1.5rem, 4vw, 2.5rem);
     box-shadow: var(--shadow);
 }
-.form-card-header { margin-bottom: 2rem; padding-bottom: 1.5rem; border-bottom: 1px solid var(--gray); }
-.form-card-header h2 { color: var(--primary-dark); font-size: 1.8rem; margin-bottom: .4rem; }
-.form-card-header p { color: var(--neutral-dark); font-size: .9rem; opacity: .8; }
-
-.quote-form { display: flex; flex-direction: column; gap: 20px; }
-.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
-.form-group { display: flex; flex-direction: column; gap: 7px; }
-.form-group label {
-    color: var(--primary-dark);
-    font-weight: 600;
-    font-size: .9rem;
-}
+.form-card-header { margin-bottom: 1.5rem; padding-bottom: 1.2rem; border-bottom: 1px solid var(--gray); }
+.form-card-header h2 { color: var(--primary-dark); font-size: clamp(1.3rem, 3vw, 1.8rem); margin-bottom: .3rem; font-weight: 700; }
+.form-card-header p { color: var(--neutral-dark); font-size: .88rem; opacity: .8; }
+.quote-form { display: flex; flex-direction: column; gap: 1.2rem; }
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+.form-group { display: flex; flex-direction: column; gap: 6px; }
+.form-group label { color: var(--primary-dark); font-weight: 600; font-size: .88rem; }
 .form-group label .req { color: #dc3545; margin-left: 3px; }
 .form-group input,
 .form-group select,
 .form-group textarea {
-    padding: 12px 15px;
+    padding: 11px 14px;
     border: 2px solid var(--gray);
     border-radius: 10px;
-    font-size: 1rem;
+    font-size: 0.95rem;
     font-family: inherit;
     color: var(--neutral-dark);
     background: var(--white);
     transition: var(--transition);
+    width: 100%;
 }
 .form-group input:focus,
 .form-group select:focus,
@@ -152,99 +248,164 @@
 }
 .form-group textarea { resize: vertical; min-height: 110px; }
 .form-group select { cursor: pointer; }
-
 .checkbox-wrap {
     display: flex; align-items: flex-start; gap: 10px;
-    font-size: .88rem; color: var(--neutral-dark);
+    font-size: .85rem; color: var(--neutral-dark);
 }
-.checkbox-wrap input { width:18px; height:18px; margin-top:2px; cursor:pointer; accent-color: var(--primary-light); }
-.checkbox-wrap a { color: var(--primary-light); font-weight:600; text-decoration:none; }
+.checkbox-wrap input { width: 18px; height: 18px; margin-top: 2px; cursor: pointer; accent-color: var(--primary-light); flex-shrink: 0; }
+.checkbox-wrap a { color: var(--primary-light); font-weight: 600; }
 .checkbox-wrap a:hover { text-decoration: underline; }
-
 .btn-submit-full {
     width: 100%;
-    padding: 16px;
+    padding: 15px;
     background: linear-gradient(135deg, var(--primary-light), var(--primary-medium));
     color: var(--white);
     border: none;
     border-radius: 50px;
-    font-size: 1.1rem;
+    font-size: 1.05rem;
     font-weight: 700;
     cursor: pointer;
     transition: var(--transition);
     letter-spacing: .04em;
+    font-family: inherit;
 }
-.btn-submit-full:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 15px 30px rgba(10,42,41,.25);
-}
-
+.btn-submit-full:hover { transform: translateY(-3px); box-shadow: 0 15px 30px rgba(10,42,41,.25); }
 .form-feedback {
     display: none;
-    padding: 14px 18px;
+    padding: 12px 16px;
     border-radius: 10px;
-    font-size: .9rem;
-    margin-top: .5rem;
+    font-size: .88rem;
+    font-weight: 500;
 }
-.form-feedback.success {
-    display: block;
-    background: #d4edda; color: #155724;
-    border: 1px solid #c3e6cb;
-}
-.form-feedback.error {
-    display: block;
-    background: #f8d7da; color: #721c24;
-    border: 1px solid #f5c6cb;
-}
+.form-feedback.success { display: block; background: rgba(40,167,69,.1); color: #155724; border: 1px solid rgba(40,167,69,.25); }
+.form-feedback.error   { display: block; background: rgba(220,53,69,.08); color: #721c24; border: 1px solid rgba(220,53,69,.2); }
 
-/* terms modal */
+/* ════ MODAL ════ */
 .terms-modal {
     display: none;
     position: fixed; inset: 0;
-    background: rgba(10,42,41,.6);
+    background: rgba(0,0,0,0.55);
     z-index: 2000;
-    align-items: center; justify-content: center;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
 }
 .terms-modal.open { display: flex; }
 .terms-box {
     background: var(--white);
-    border-radius: 20px;
-    padding: 40px;
-    max-width: 550px; width: 90%;
-    box-shadow: 0 30px 60px rgba(10,42,41,.3);
+    border-radius: var(--radius);
+    padding: clamp(1.5rem, 4vw, 2.5rem);
+    max-width: 500px;
+    width: 100%;
 }
-.terms-box h3 { color: var(--primary-dark); margin-bottom: 1rem; font-size: 1.4rem; }
-.terms-box p { color: var(--neutral-dark); line-height: 1.7; margin-bottom: 1.5rem; font-size: .95rem; }
+.terms-box h3 { color: var(--primary-dark); font-size: 1.2rem; margin-bottom: 1rem; }
+.terms-box p { font-size: .9rem; line-height: 1.7; color: var(--neutral-dark); margin-bottom: 1.5rem; }
 .terms-close {
     background: var(--primary-light);
-    color: var(--white);
+    color: #fff;
     border: none;
-    padding: 12px 30px;
+    padding: 0.6rem 1.8rem;
     border-radius: 50px;
-    cursor: pointer;
+    font-size: .9rem;
     font-weight: 600;
+    cursor: pointer;
+    font-family: inherit;
     transition: var(--transition);
 }
 .terms-close:hover { background: var(--primary-medium); }
 
-@media(max-width:768px){
-    .projects-hero h1 { font-size: 2rem; }
-    .info-strip-grid { grid-template-columns: 1fr; }
-    .quote-layout { grid-template-columns: 1fr; }
-    .form-row { grid-template-columns: 1fr; }
-    .quote-form-card { padding: 25px; }
-    .quote-side { order: 2; }
+/* ════ FOOTER ════ */
+.footer {
+    background: var(--primary-dark);
+    color: rgba(255,255,255,0.75);
+    padding: clamp(2.5rem, 6vw, 4rem) 0 1.5rem;
 }
-</style>
-<style>
-.reveal { animation: revealFade 0.7s ease both; }
-@keyframes revealFade { from { opacity: 0; transform: translateY(26px); } to { opacity: 1; transform: none; } }
+.footer-grid {
+    display: grid;
+    grid-template-columns: 2fr repeat(3, 1fr);
+    gap: 2.5rem;
+    margin-bottom: 2.5rem;
+}
+.footer-logo-wrap { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.75rem; }
+.footer-logo-wrap img { height: 38px; width: auto; }
+.footer-brand { font-size: 1rem; font-weight: 700; color: #fff; }
+.footer-tagline { font-size: .85rem; font-style: italic; opacity: .6; margin-bottom: 1rem; }
+.footer-contact-item { font-size: .85rem; margin-bottom: .4rem; }
+.footer-contact-item a { color: rgba(255,255,255,0.7); transition: var(--transition); }
+.footer-contact-item a:hover { color: #7ee8d4; }
+.footer-col h5 { font-size: .82rem; font-weight: 700; text-transform: uppercase; letter-spacing: .1em; color: #fff; margin-bottom: .9rem; }
+.footer-col ul li { margin-bottom: .45rem; }
+.footer-col ul a { font-size: .82rem; opacity: .65; transition: var(--transition); }
+.footer-col ul a:hover { opacity: 1; color: #7ee8d4; }
+.footer-bottom {
+    border-top: 1px solid rgba(255,255,255,0.08);
+    padding-top: 1.5rem;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: .5rem;
+}
+.footer-copy { font-size: .76rem; opacity: .45; }
+
+/* ── Reveal ── */
+.reveal { opacity: 0; transform: translateY(22px); transition: opacity 0.6s ease, transform 0.6s ease; }
 .reveal.active { opacity: 1; transform: none; }
+
+/* ════════════════════════════════════════
+   RESPONSIVE TABLET (≤ 900px)
+════════════════════════════════════════ */
+@media (max-width: 900px) {
+    .nav-menu {
+        display: none;
+        position: fixed;
+        top: 68px; left: 0; right: 0;
+        background: var(--primary-dark);
+        flex-direction: column;
+        align-items: stretch;
+        padding: 1rem;
+        gap: 0.25rem;
+        border-top: 1px solid rgba(255,255,255,0.08);
+        max-height: calc(100svh - 68px);
+        overflow-y: auto;
+        z-index: 999;
+    }
+    .nav-menu.active { display: flex; }
+    .nav-menu a { font-size: 1rem; padding: 0.8rem 1rem; border-radius: 8px; }
+    .hamburger { display: flex; }
+
+    .quote-layout {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+    .quote-side { order: 2; }
+    .quote-form-card { order: 1; }
+
+    .info-strip-grid { grid-template-columns: 1fr; max-width: 480px; }
+
+    .footer-grid { grid-template-columns: 1fr 1fr; }
+    .footer-grid > div:first-child { grid-column: 1 / -1; }
+}
+
+/* ════════════════════════════════════════
+   RESPONSIVE MOBILE (≤ 600px)
+════════════════════════════════════════ */
+@media (max-width: 600px) {
+    .logo-container img { height: 32px; }
+    .slogan { display: none; }
+
+    .projects-hero { padding: 6rem 1rem 2.5rem; }
+    .projects-hero h1 { font-size: clamp(1.5rem, 7vw, 2rem); }
+
+    .form-row { grid-template-columns: 1fr; gap: 0; }
+
+    .footer-grid { grid-template-columns: 1fr; gap: 1.5rem; }
+    .footer-bottom { flex-direction: column; }
+}
 </style>
 </head>
 <body>
 
-<!-- HEADER -->
+<!-- ══ HEADER ═══════════════════════════ -->
 <header class="header">
     <nav class="navbar">
         <a href="index.html" class="logo-container">
@@ -253,78 +414,73 @@
         </a>
         <ul class="nav-menu" id="navMenu">
             <li><a href="index.html">Inicio</a></li>
-            <li><a href="proyectos.html" class="active">Proyectos</a></li>
-            <li><a href="index.html#valores">Misión y Valores</a></li>
+            <li><a href="index.html#mision">Misión y Valores</a></li>
+            <li><a href="index.html#servicios">Servicios</a></li>
+            <li><a href="index.html#legacy">Sistemas Legacy</a></li>
+            <li><a href="socios.html">Socios Comerciales</a></li>
             <li><a href="index.html#contacto">Contacto</a></li>
-            <li class="dropdown">
-                <a href="#" class="dropbtn">Más ▾</a>
-                <div class="dropdown-content">
-                    <a href="index.html#servicios">Servicios</a>
-                    <a href="index.html#legacy">Sistemas Legacy</a>
-                    <a href="proyectos.html">Cotización</a>
-                </div>
-            </li>
         </ul>
         <button class="hamburger" id="hamburger" aria-label="Menú">
-            <span class="bar"></span><span class="bar"></span><span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
         </button>
     </nav>
 </header>
 
-<!-- HERO -->
+<!-- ══ HERO ═══════════════════════════════ -->
 <section class="projects-hero">
     <h1>Solicita tu Cotización</h1>
-    <p>Completa el formulario y en menos de 24 horas te enviaremos una propuesta personalizada para tu proyecto de automatización.</p>
+    <p>Cuéntanos sobre tu proyecto y en menos de 24 horas recibirás una propuesta técnica personalizada sin costo.</p>
 </section>
 
-<!-- INFO STRIP -->
+<!-- ══ INFO STRIP ════════════════════════ -->
 <div class="info-strip">
     <div class="info-strip-grid">
         <div class="info-chip">
             <span class="info-chip-icon">⚡</span>
             <div class="info-chip-text">
-                <strong>Respuesta en 24h</strong>
+                <strong>Respuesta en &lt; 24 hrs</strong>
                 <span>Propuesta técnica personalizada</span>
             </div>
         </div>
         <div class="info-chip">
             <span class="info-chip-icon">🔒</span>
             <div class="info-chip-text">
-                <strong>Datos confidenciales</strong>
-                <span>Tu arquitectura es tu activo</span>
+                <strong>100% Confidencial</strong>
+                <span>Tus datos están protegidos</span>
             </div>
         </div>
         <div class="info-chip">
             <span class="info-chip-icon">🎯</span>
             <div class="info-chip-text">
-                <strong>Sin costo</strong>
-                <span>Asesoría técnica incluida</span>
+                <strong>Cotización Gratuita</strong>
+                <span>Sin compromisos ni cargos</span>
             </div>
         </div>
     </div>
 </div>
 
-<!-- FORMULARIO -->
+<!-- ══ COTIZACIÓN ════════════════════════ -->
 <section class="quote-section">
     <div class="quote-layout">
-
-        <!-- Columna izquierda: info -->
+        <!-- Columna izquierda -->
         <div class="quote-side reveal">
-            <h2>¿Por qué cotizar con VEF?</h2>
-            <p>No solo enviamos un número — te entregamos una solución integral basada en años de experiencia en el sector industrial.</p>
+            <h2>¿Por qué elegir VEF?</h2>
+            <p>Somos especialistas en automatización industrial con dominio técnico multi-plataforma y experiencia probada en sistemas legacy.</p>
             <ul class="benefit-list">
-                <li><span class="benefit-icon">✓</span> Asesoría técnica especializada sin costo</li>
-                <li><span class="benefit-icon">✓</span> Propuesta en máximo 24 horas hábiles</li>
-                <li><span class="benefit-icon">✓</span> Ingeniero asignado con experiencia en tu plataforma</li>
-                <li><span class="benefit-icon">✓</span> Soporte multi-plataforma: Siemens, Rockwell, CODESYS, Bosch</li>
-                <li><span class="benefit-icon">✓</span> Expertos en sistemas legacy y obsoletos</li>
+                <li><span class="benefit-icon">✓</span> Respuesta técnica en menos de 24 horas</li>
+                <li><span class="benefit-icon">✓</span> Ingeniero asignado a tu proyecto</li>
+                <li><span class="benefit-icon">✓</span> Multi-plataforma: Siemens, Rockwell, Bosch, CODESYS</li>
+                <li><span class="benefit-icon">✓</span> Documentación técnica completa incluida</li>
+                <li><span class="benefit-icon">✓</span> Soporte post-implementación garantizado</li>
                 <li><span class="benefit-icon">✓</span> Estudio de ROI detallado incluido</li>
             </ul>
             <div class="contact-box">
                 <h3>📞 Atención Inmediata</h3>
                 <a href="https://wa.me/527221157792">📱 +52 (722) 1157792 WhatsApp</a>
-                <a href="/cdn-cgi/l/email-protection#671408170815130249110209130614271102014a061213080a06130e1d06040e08094904080a">✉ contacto@vefautomatizacion.com</a>
-                <a href="/cdn-cgi/l/email-protection#395c4b5052585e56574358555c43794f5c5f14584c4d5654584d5043585a505657175a5654">✉ contacto@vefautomatizacion.com</a>
+                <a href="mailto:contacto@vefautomatizacion.com">✉ contacto@vefautomatizacion.com</a>
+                <a href="mailto:soporte@vefautomatizacion.com">✉ soporte@vefautomatizacion.com</a>
             </div>
         </div>
 
@@ -411,7 +567,7 @@
 <div class="terms-modal" id="termsModal">
     <div class="terms-box">
         <h3>Términos y Condiciones</h3>
-        <p>Al enviar este formulario, autorizas a VEF Automatización a contactarte para dar seguimiento a tu solicitud. Tus datos serán tratados con confidencialidad y únicamente con fines comerciales relacionados con tu proyecto de automatización industrial. No compartimos tu información con terceros. Para más información consulta nuestro Aviso de Privacidad.</p>
+        <p>Al enviar este formulario, autorizas a VEF Automatización a contactarte para dar seguimiento a tu solicitud. Tus datos serán tratados con confidencialidad y únicamente con fines comerciales relacionados con tu proyecto de automatización industrial. No compartimos tu información con terceros.</p>
         <button class="terms-close" id="closeTerms">Entendido</button>
     </div>
 </div>
@@ -427,14 +583,14 @@
                 </div>
                 <p class="footer-tagline">"Control Preciso. Resultados Medibles."</p>
                 <p class="footer-contact-item">✉ <a href="mailto:contacto@vefautomatizacion.com">contacto@vefautomatizacion.com</a></p>
-                <p class="footer-contact-item">✉ <a href="mailto:ventas@vefautomatizacion.com">ventas@vefautomatizacion.com</a></p>
+                <p class="footer-contact-item">✉ <a href="mailto:soporte@vefautomatizacion.com">soporte@vefautomatizacion.com</a></p>
                 <p class="footer-contact-item">📱 <a href="https://wa.me/527221157792">+52 (722) 1157792 WhatsApp</a></p>
             </div>
             <div class="footer-col">
                 <h5>Navegación</h5>
                 <ul>
                     <li><a href="index.html">Inicio</a></li>
-                    <li><a href="index.html#mision">Misión & Visión</a></li>
+                    <li><a href="index.html#mision">Misión &amp; Visión</a></li>
                     <li><a href="index.html#servicios">Servicios</a></li>
                     <li><a href="index.html#legacy">Sistemas Legacy</a></li>
                 </ul>
@@ -451,8 +607,8 @@
             <div class="footer-col">
                 <h5>Empresa</h5>
                 <ul>
+                    <li><a href="socios.html">Socios Comerciales</a></li>
                     <li><a href="#">LinkedIn</a></li>
-                    <li><a href="#">GitHub Industrial</a></li>
                     <li><a href="#">Aviso de Privacidad</a></li>
                     <li><a href="#">Términos y Condiciones</a></li>
                 </ul>
@@ -465,9 +621,35 @@
     </div>
 </footer>
 
-<script src="js/main.js"></script>
 <script>
-// Formulario
+/* ── Hamburger ── */
+const hamburger = document.getElementById('hamburger');
+const navMenu   = document.getElementById('navMenu');
+if (hamburger && navMenu) {
+    hamburger.addEventListener('click', () => {
+        navMenu.classList.toggle('active');
+        hamburger.classList.toggle('active');
+    });
+    navMenu.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', () => {
+            navMenu.classList.remove('active');
+            hamburger.classList.remove('active');
+        });
+    });
+}
+
+/* ── Reveal ── */
+const revealEls = document.querySelectorAll('.reveal');
+if ('IntersectionObserver' in window) {
+    const io = new IntersectionObserver(entries => {
+        entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('active'); io.unobserve(e.target); } });
+    }, { threshold: 0.08 });
+    revealEls.forEach(el => io.observe(el));
+} else {
+    revealEls.forEach(el => el.classList.add('active'));
+}
+
+/* ── Modal términos ── */
 document.getElementById('openTerms').addEventListener('click', e => {
     e.preventDefault();
     document.getElementById('termsModal').classList.add('open');
@@ -479,9 +661,10 @@ document.getElementById('termsModal').addEventListener('click', e => {
     if (e.target === e.currentTarget) e.currentTarget.classList.remove('open');
 });
 
+/* ── Formulario ── */
 document.getElementById('quoteForm').addEventListener('submit', function(e) {
     e.preventDefault();
-    const fb = document.getElementById('formFeedback');
+    const fb      = document.getElementById('formFeedback');
     const nombre  = document.getElementById('nombre').value.trim();
     const empresa = document.getElementById('empresa').value.trim();
     const email   = document.getElementById('email').value.trim();
@@ -489,12 +672,11 @@ document.getElementById('quoteForm').addEventListener('submit', function(e) {
     const servicio= document.getElementById('servicio').value;
     const alcance = document.getElementById('alcance').value.trim();
     const terminos= document.getElementById('terminos').checked;
-    const telefono= document.getElementById('telefono').value.trim();
-    const plazo   = document.getElementById('plazo').value;
 
     if (!nombre || !empresa || !email || !software || !servicio || !alcance) {
         fb.className = 'form-feedback error';
-        fb.textContent = 'Por favor completa todos los campos requeridos (*)';
+        fb.textContent = 'Por favor completa todos los campos requeridos (*).';
+        fb.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
         return;
     }
     if (!terminos) {
@@ -502,21 +684,11 @@ document.getElementById('quoteForm').addEventListener('submit', function(e) {
         fb.textContent = 'Debes aceptar los términos y condiciones.';
         return;
     }
-
-    // Validar formato email
-    const emailReg = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailReg.test(email)) {
-        fb.className = 'form-feedback error';
-        fb.textContent = 'Por favor ingresa un correo electrónico válido.';
-        return;
-    }
-
     // Simular envío exitoso
     fb.className = 'form-feedback success';
-    fb.style.display = 'block';
-    fb.textContent = '✓ ¡Solicitud enviada! Te contactaremos en menos de 24 horas hábiles.';
-    document.getElementById('quoteForm').reset();
-    fb.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    fb.textContent = '✅ ¡Solicitud enviada con éxito! Te contactaremos en menos de 24 horas.';
+    this.reset();
+    fb.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
 });
 </script>
 </body>
