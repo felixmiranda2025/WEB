@@ -6,282 +6,19 @@
 <title>VEF Automatización | Control Preciso. Resultados Medibles.</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Segoe+UI:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/Style.css">
 <link rel="icon" type="image/png" href="images/logo-vef.png">
 <style>
-/* ════════════════════════════════════════
-   VEF AUTOMATIZACIÓN — CSS COMPLETO RESPONSIVO
-   Breakpoints: móvil ≤480px | tablet ≤768px | desktop >768px
-════════════════════════════════════════ */
-
-/* ── VARIABLES ── */
-:root {
-    --primary-dark:   #0a2a29;
-    --primary-medium: #1a5c58;
-    --primary-light:  #2a8b7c;
-    --white:          #ffffff;
-    --neutral-light:  #f4f7f6;
-    --neutral-dark:   #2d3748;
-    --gray:           #e2e8f0;
-    --shadow:         0 8px 32px rgba(10,42,41,0.12);
-    --transition:     all 0.25s ease;
-    --radius:         14px;
-}
-
-/* ── RESET & BASE ── */
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html { scroll-behavior: smooth; }
-body {
-    font-family: 'Inter', system-ui, sans-serif;
-    color: var(--neutral-dark);
-    background: var(--white);
-    line-height: 1.6;
-    overflow-x: hidden;
-}
-img { max-width: 100%; height: auto; display: block; }
-a { color: inherit; text-decoration: none; }
-ul { list-style: none; }
-
-/* ── CONTAINER ── */
-.container {
-    width: 100%;
-    max-width: 1180px;
-    margin: 0 auto;
-    padding: 0 clamp(1rem, 4vw, 2.5rem);
-}
-
-/* ════ HEADER ════ */
-.header {
-    position: fixed;
-    top: 0; left: 0; right: 0;
-    z-index: 1000;
-    background: rgba(10,42,41,0.97);
-    backdrop-filter: blur(14px);
-    box-shadow: 0 2px 20px rgba(10,42,41,0.08);
-    transition: box-shadow 0.3s;
-}
-.navbar {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    height: 68px;
-    padding: 0 clamp(1rem, 4vw, 2.5rem);
-    max-width: 1280px;
-    margin: 0 auto;
-}
-.logo-container {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-    text-decoration: none;
-    flex-shrink: 0;
-}
-.logo-container img {
-    height: 40px;
-    width: auto;
-    object-fit: contain;
-}
-.slogan {
-    font-size: 0.78rem;
-    font-weight: 500;
-    color: rgba(255,255,255,0.65);
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-}
-
-/* Nav menu */
-.nav-menu {
-    display: flex;
-    align-items: center;
-    gap: 0.15rem;
-    list-style: none;
-}
-.nav-menu a {
-    color: rgba(255,255,255,0.82);
-    font-size: 0.88rem;
-    font-weight: 500;
-    padding: 0.45rem 0.85rem;
-    border-radius: 6px;
-    transition: var(--transition);
-    white-space: nowrap;
-}
-.nav-menu a:hover,
-.nav-menu a.active {
-    color: #fff;
-    background: rgba(255,255,255,0.1);
-}
-
-/* Dropdown */
-.dropdown { position: relative; }
-.dropdown-content {
-    display: none;
-    position: absolute;
-    top: calc(100% + 8px);
-    right: 0;
-    background: var(--primary-dark);
-    border-radius: 10px;
-    overflow: hidden;
-    min-width: 180px;
-    box-shadow: 0 12px 32px rgba(0,0,0,0.3);
-    border: 1px solid rgba(255,255,255,0.08);
-}
-.dropdown:hover .dropdown-content { display: block; }
-.dropdown-content a {
-    display: block;
-    padding: 0.65rem 1rem;
-    border-radius: 0;
-    font-size: 0.85rem;
-    border-bottom: 1px solid rgba(255,255,255,0.05);
-}
-.dropdown-content a:last-child { border-bottom: none; }
-
-/* Hamburger */
-.hamburger {
-    display: none;
-    flex-direction: column;
-    gap: 5px;
-    background: none;
-    border: none;
-    cursor: pointer;
-    padding: 8px;
-    border-radius: 6px;
-    transition: background 0.2s;
-}
-.hamburger:hover { background: rgba(255,255,255,0.1); }
-.bar {
-    width: 24px;
-    height: 2px;
-    background: #fff;
-    border-radius: 2px;
-    transition: all 0.3s;
-    display: block;
-}
-.hamburger.active .bar:nth-child(1) { transform: translateY(7px) rotate(45deg); }
-.hamburger.active .bar:nth-child(2) { opacity: 0; }
-.hamburger.active .bar:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
-
-/* ════ HERO ════ */
-.hero {
-    position: relative;
-    min-height: 100svh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    overflow: hidden;
-}
-.video-container {
-    position: absolute;
-    inset: 0;
-    z-index: 0;
-}
-.video-container video {
-    width: 100%; height: 100%;
-    object-fit: cover;
-    object-position: center;
-}
-.overlay {
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(135deg, rgba(10,42,41,0.82) 0%, rgba(26,92,88,0.65) 100%);
-    z-index: 1;
-}
-.hero-content {
-    position: relative;
-    z-index: 2;
-    text-align: center;
-    color: #fff;
-    padding: clamp(5rem, 12vw, 8rem) clamp(1rem, 5vw, 2rem) clamp(3rem, 6vw, 4rem);
-    max-width: 860px;
-    width: 100%;
-}
-.hero-content h1 {
-    font-size: clamp(2rem, 5.5vw, 4.2rem);
-    font-weight: 700;
-    line-height: 1.15;
-    margin-bottom: 1rem;
-    letter-spacing: -0.02em;
-}
-.hero-content h1 span {
-    display: block;
-    color: #7ee8d4;
-    font-weight: 300;
-}
-.hero-content p {
-    font-size: clamp(1rem, 2.2vw, 1.2rem);
-    opacity: 0.88;
-    margin-bottom: 2.5rem;
-    max-width: 560px;
-    margin-left: auto;
-    margin-right: auto;
-}
-
-/* VEF Letters */
-.hero-vef {
-    display: flex;
-    justify-content: center;
-    gap: clamp(1.5rem, 4vw, 3rem);
-    margin-bottom: 2.5rem;
-    flex-wrap: wrap;
-}
-.vef-item {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 0.3rem;
-}
-.vef-letter {
-    font-size: clamp(2.2rem, 5vw, 3.5rem);
-    font-weight: 700;
-    color: #7ee8d4;
-    line-height: 1;
-}
-.vef-word {
-    font-size: clamp(0.7rem, 1.5vw, 0.85rem);
-    text-transform: uppercase;
-    letter-spacing: 0.12em;
-    opacity: 0.75;
-}
-
-/* Hero Buttons */
+.reveal { animation: revealFade 0.7s ease both; }
+@keyframes revealFade { from { opacity: 0; transform: translateY(26px); } to { opacity: 1; transform: none; } }
+.reveal.active { opacity: 1; transform: none; }
 .hero-buttons {
     display: flex !important;
     flex-wrap: wrap !important;
     gap: 1rem !important;
     justify-content: center !important;
     align-items: center !important;
-}
-.btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.4rem;
-    padding: 0.85rem 1.9rem;
-    border-radius: 50px;
-    font-weight: 600;
-    font-size: 0.95rem;
-    letter-spacing: 0.02em;
-    transition: var(--transition);
-    cursor: pointer;
-    border: 2px solid transparent;
-}
-.btn-primary {
-    background: var(--primary-light);
-    color: #fff;
-    border-color: var(--primary-light);
-}
-.btn-primary:hover {
-    background: var(--primary-medium);
-    border-color: var(--primary-medium);
-    transform: translateY(-2px);
-    box-shadow: 0 12px 28px rgba(42,139,124,0.4);
-}
-.btn-secondary {
-    background: transparent;
-    color: #fff;
-    border-color: rgba(255,255,255,0.5);
-}
-.btn-secondary:hover {
-    background: rgba(255,255,255,0.1);
-    border-color: #fff;
 }
 .btn-socios {
     background: transparent;
@@ -293,7 +30,7 @@ ul { list-style: none; }
     font-size: 0.95rem;
     letter-spacing: 0.02em;
     text-decoration: none;
-    transition: var(--transition);
+    transition: background 0.2s, border-color 0.2s;
     display: inline-flex;
     align-items: center;
     gap: 0.4rem;
@@ -301,578 +38,6 @@ ul { list-style: none; }
 .btn-socios:hover {
     background: rgba(255,255,255,0.1);
     border-color: #fff;
-}
-
-/* ════ STATS BAR ════ */
-.stats-bar {
-    background: var(--primary-dark);
-    padding: 1.2rem 0;
-    overflow: hidden;
-}
-.stats-inner {
-    display: flex;
-    justify-content: center;
-    align-items: stretch;
-    flex-wrap: wrap;
-    gap: 0;
-    max-width: 1100px;
-    margin: 0 auto;
-    padding: 0 1rem;
-}
-.stat-block {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 0.8rem 1.8rem;
-    border-right: 1px solid rgba(255,255,255,0.1);
-    text-align: center;
-    flex: 1;
-    min-width: 140px;
-}
-.stat-block:last-child { border-right: none; }
-.stat-n {
-    color: #7ee8d4;
-    font-size: 1rem;
-    font-weight: 700;
-    letter-spacing: 0.03em;
-}
-.stat-l {
-    color: rgba(255,255,255,0.55);
-    font-size: 0.72rem;
-    margin-top: 0.2rem;
-    letter-spacing: 0.02em;
-}
-
-/* ════ SECTIONS ════ */
-.section {
-    padding: clamp(3.5rem, 8vw, 6rem) 0;
-}
-.section-alt { background: var(--neutral-light); }
-
-.section-head { text-align: center; margin-bottom: 3rem; }
-.section-tag-label {
-    display: inline-block;
-    font-size: 0.75rem;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.14em;
-    color: var(--primary-light);
-    background: rgba(42,139,124,0.1);
-    padding: 0.35rem 1rem;
-    border-radius: 20px;
-    margin-bottom: 1rem;
-}
-.section-title {
-    font-size: clamp(1.7rem, 3.5vw, 2.6rem);
-    font-weight: 700;
-    color: var(--primary-dark);
-    margin-bottom: 1rem;
-    text-align: center;
-    letter-spacing: -0.02em;
-}
-
-/* ════ MISIÓN & VISIÓN ════ */
-.mv-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 2rem;
-    margin-top: 2rem;
-}
-.mv-card {
-    background: var(--white);
-    border-radius: var(--radius);
-    padding: clamp(1.5rem, 4vw, 2.5rem);
-    box-shadow: var(--shadow);
-    border-top: 4px solid var(--primary-light);
-    transition: var(--transition);
-}
-.mv-card:hover { transform: translateY(-4px); }
-.vision-card { border-top-color: var(--primary-medium); }
-.mv-icon-wrap {
-    font-size: 2.2rem;
-    margin-bottom: 1rem;
-}
-.mv-card h3 {
-    color: var(--primary-dark);
-    font-size: 1.25rem;
-    font-weight: 700;
-    margin-bottom: 0.8rem;
-}
-.mv-quote {
-    font-style: italic;
-    color: var(--primary-medium);
-    font-size: 0.92rem;
-    line-height: 1.7;
-    margin-bottom: 1rem;
-    padding-left: 0.8rem;
-    border-left: 3px solid var(--primary-light);
-}
-.mv-list {
-    list-style: none;
-    padding: 0;
-}
-.mv-list li {
-    padding: 0.45rem 0;
-    font-size: 0.88rem;
-    color: var(--neutral-dark);
-    border-bottom: 1px solid var(--gray);
-    padding-left: 1.2rem;
-    position: relative;
-}
-.mv-list li::before {
-    content: '→';
-    position: absolute;
-    left: 0;
-    color: var(--primary-light);
-    font-size: 0.85rem;
-}
-.mv-list li:last-child { border-bottom: none; }
-
-/* ════ VALORES ════ */
-.valores-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 1.5rem;
-    margin-bottom: 2rem;
-}
-.valor-card {
-    background: var(--white);
-    border-radius: var(--radius);
-    padding: 2rem 1.5rem;
-    text-align: center;
-    box-shadow: var(--shadow);
-    transition: var(--transition);
-}
-.valor-card:hover { transform: translateY(-4px); }
-.valor-ico {
-    width: 60px; height: 60px;
-    border-radius: 50%;
-    background: linear-gradient(135deg, var(--primary-light), var(--primary-medium));
-    color: #fff;
-    font-size: 1.6rem;
-    font-weight: 800;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 0 auto 1rem;
-}
-.valor-card h3 {
-    color: var(--primary-dark);
-    font-size: 1.15rem;
-    font-weight: 700;
-    margin-bottom: 0.6rem;
-}
-.valor-card p { font-size: 0.88rem; line-height: 1.65; opacity: 0.85; }
-
-.principios-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 1.2rem;
-}
-.principio-card {
-    background: var(--white);
-    border-radius: 10px;
-    padding: 1.4rem;
-    box-shadow: 0 2px 12px rgba(10,42,41,0.06);
-}
-.principio-card h4 { font-size: 0.95rem; font-weight: 700; margin-bottom: 0.5rem; }
-.principio-card p { font-size: 0.84rem; line-height: 1.6; opacity: 0.8; }
-
-/* ════ TABLA DIFERENCIACIÓN ════ */
-.diff-table-wrap {
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-    margin-bottom: 2rem;
-    border-radius: var(--radius);
-    box-shadow: var(--shadow);
-}
-.diff-table {
-    width: 100%;
-    min-width: 520px;
-    border-collapse: collapse;
-    background: var(--white);
-}
-.diff-table thead tr {
-    background: linear-gradient(135deg, var(--primary-dark), var(--primary-medium));
-}
-.diff-table th {
-    padding: 1rem 1.4rem;
-    color: #fff;
-    font-weight: 700;
-    font-size: 0.92rem;
-    text-align: left;
-    letter-spacing: 0.02em;
-}
-.diff-table td {
-    padding: 0.85rem 1.4rem;
-    font-size: 0.88rem;
-    border-bottom: 1px solid var(--gray);
-    vertical-align: middle;
-}
-.diff-table tbody tr:hover { background: rgba(42,139,124,0.04); }
-.cross { color: #dc3545; margin-right: 0.5rem; font-weight: 700; }
-.check { color: var(--primary-light); margin-right: 0.5rem; font-weight: 700; }
-
-.highlight-box {
-    background: linear-gradient(135deg, var(--primary-dark), var(--primary-medium));
-    color: #fff;
-    padding: clamp(1.5rem, 4vw, 2.5rem);
-    border-radius: var(--radius);
-    font-style: italic;
-    font-size: clamp(0.92rem, 2vw, 1.1rem);
-    line-height: 1.7;
-    text-align: center;
-    margin-bottom: 2rem;
-}
-
-.lemas-container {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-    gap: 1.2rem;
-}
-.lema-card {
-    background: var(--white);
-    border-radius: 10px;
-    padding: 1.4rem;
-    box-shadow: var(--shadow);
-    border-left: 4px solid var(--primary-light);
-    display: flex;
-    flex-direction: column;
-    gap: 0.4rem;
-}
-.lema-cat { font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--primary-light); }
-.lema-txt { font-size: 0.95rem; font-weight: 600; color: var(--primary-dark); font-style: italic; }
-
-/* ════ PILARES / SERVICIOS ════ */
-.pillars-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-    gap: 1.5rem;
-}
-.pillar-card {
-    background: var(--white);
-    border-radius: var(--radius);
-    padding: clamp(1.4rem, 3vw, 2rem);
-    box-shadow: var(--shadow);
-    transition: var(--transition);
-    position: relative;
-    overflow: hidden;
-}
-.pillar-card:hover { transform: translateY(-4px); box-shadow: 0 16px 40px rgba(10,42,41,0.15); }
-.pillar-num {
-    font-size: 2.8rem;
-    font-weight: 800;
-    color: rgba(42,139,124,0.12);
-    line-height: 1;
-    display: block;
-    margin-bottom: 0.5rem;
-}
-.pillar-bar {
-    width: 40px;
-    height: 3px;
-    background: var(--primary-light);
-    border-radius: 2px;
-    margin-bottom: 0.8rem;
-}
-.pillar-card h3 {
-    color: var(--primary-dark);
-    font-size: 1.05rem;
-    font-weight: 700;
-    margin-bottom: 0.8rem;
-}
-.pillar-list { list-style: none; margin-bottom: 1rem; }
-.pillar-list li {
-    font-size: 0.85rem;
-    padding: 0.3rem 0;
-    padding-left: 1rem;
-    position: relative;
-    color: var(--neutral-dark);
-    opacity: 0.85;
-}
-.pillar-list li::before { content: '·'; position: absolute; left: 0; color: var(--primary-light); font-weight: 700; }
-.pillar-deliverable {
-    font-size: 0.8rem;
-    color: var(--primary-medium);
-    font-weight: 600;
-    background: rgba(42,139,124,0.08);
-    padding: 0.5rem 0.8rem;
-    border-radius: 6px;
-}
-
-/* ════ MANIFIESTO ════ */
-.manifesto-band {
-    background: linear-gradient(135deg, var(--primary-dark), var(--primary-medium));
-    color: #fff;
-    padding: clamp(2.5rem, 6vw, 4rem) 0;
-}
-.manifesto-band p {
-    font-size: clamp(1rem, 2.2vw, 1.25rem);
-    line-height: 1.8;
-    max-width: 820px;
-    margin: 0 auto 1.5rem;
-    text-align: center;
-    opacity: 0.92;
-}
-.manifesto-close {
-    text-align: center;
-    font-size: clamp(1rem, 2vw, 1.2rem);
-    font-weight: 700;
-    color: #7ee8d4;
-    letter-spacing: 0.03em;
-}
-
-/* ════ LEGACY ════ */
-.legacy-intro {
-    font-size: clamp(0.95rem, 2vw, 1.05rem);
-    max-width: 780px;
-    margin: 0 auto 2.5rem;
-    text-align: center;
-    line-height: 1.7;
-    opacity: 0.85;
-}
-.legacy-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-    gap: 1.5rem;
-    margin-bottom: 2rem;
-}
-.legacy-card {
-    background: var(--white);
-    border-radius: var(--radius);
-    padding: 1.8rem;
-    box-shadow: var(--shadow);
-    border-top: 3px solid var(--primary-light);
-    transition: var(--transition);
-}
-.legacy-card:hover { transform: translateY(-3px); }
-.legacy-brand {
-    font-size: 1.1rem;
-    font-weight: 800;
-    color: var(--primary-dark);
-    margin-bottom: 1rem;
-    padding-bottom: 0.6rem;
-    border-bottom: 1px solid var(--gray);
-}
-.legacy-list { list-style: none; }
-.legacy-list li {
-    padding: 0.6rem 0;
-    border-bottom: 1px solid var(--gray);
-    display: flex;
-    flex-direction: column;
-    gap: 0.2rem;
-}
-.legacy-list li:last-child { border-bottom: none; }
-.legacy-model { font-weight: 700; color: var(--primary-medium); font-size: 0.9rem; }
-.legacy-sub { font-size: 0.78rem; color: var(--neutral-dark); opacity: 0.7; }
-
-.legacy-cta {
-    text-align: center;
-    padding: 2rem;
-    background: rgba(42,139,124,0.08);
-    border-radius: var(--radius);
-    border: 1px solid rgba(42,139,124,0.2);
-}
-.legacy-cta p { font-size: 1.05rem; font-weight: 600; color: var(--primary-dark); margin-bottom: 0.8rem; }
-.legacy-cta a {
-    color: var(--primary-light);
-    font-weight: 700;
-    font-size: 1rem;
-    transition: var(--transition);
-}
-.legacy-cta a:hover { color: var(--primary-medium); }
-
-/* ════ CARRUSEL ════ */
-.carrusel-wrap {
-    overflow: hidden;
-    padding: 1.5rem 0;
-    position: relative;
-}
-.carrusel-wrap::before,
-.carrusel-wrap::after {
-    content: '';
-    position: absolute;
-    top: 0; bottom: 0;
-    width: 80px;
-    z-index: 2;
-}
-.carrusel-wrap::before { left: 0; background: linear-gradient(to right, var(--neutral-light), transparent); }
-.carrusel-wrap::after { right: 0; background: linear-gradient(to left, var(--neutral-light), transparent); }
-.carrusel-track {
-    display: flex;
-    gap: 3rem;
-    animation: scroll 35s linear infinite;
-    width: max-content;
-}
-.carrusel-img {
-    height: 48px;
-    width: auto;
-    object-fit: contain;
-    opacity: 0.65;
-    transition: opacity 0.3s;
-    filter: grayscale(30%);
-    flex-shrink: 0;
-}
-.carrusel-img:hover { opacity: 1; filter: none; }
-@keyframes scroll { from { transform: translateX(0); } to { transform: translateX(-50%); } }
-.carrusel-caption {
-    text-align: center;
-    font-size: 0.8rem;
-    font-weight: 600;
-    color: var(--primary-light);
-    letter-spacing: 0.08em;
-    margin-top: 1.5rem;
-    opacity: 0.7;
-}
-
-/* ════ FOOTER ════ */
-.footer {
-    background: var(--primary-dark);
-    color: rgba(255,255,255,0.75);
-    padding: clamp(2.5rem, 6vw, 4rem) 0 1.5rem;
-}
-.footer-grid {
-    display: grid;
-    grid-template-columns: 2fr repeat(3, 1fr);
-    gap: 2.5rem;
-    margin-bottom: 2.5rem;
-}
-.footer-logo-wrap {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-    margin-bottom: 0.75rem;
-}
-.footer-logo-wrap img { height: 38px; width: auto; }
-.footer-brand { font-size: 1rem; font-weight: 700; color: #fff; }
-.footer-tagline { font-size: 0.85rem; font-style: italic; opacity: 0.6; margin-bottom: 1rem; }
-.footer-contact-item {
-    font-size: 0.85rem;
-    margin-bottom: 0.4rem;
-}
-.footer-contact-item a { color: rgba(255,255,255,0.7); transition: var(--transition); }
-.footer-contact-item a:hover { color: #7ee8d4; }
-.footer-col h5 {
-    font-size: 0.85rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    color: #fff;
-    margin-bottom: 1rem;
-}
-.footer-col ul li { margin-bottom: 0.5rem; }
-.footer-col ul a { font-size: 0.84rem; opacity: 0.65; transition: var(--transition); }
-.footer-col ul a:hover { opacity: 1; color: #7ee8d4; }
-.footer-bottom {
-    border-top: 1px solid rgba(255,255,255,0.08);
-    padding-top: 1.5rem;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    gap: 0.5rem;
-}
-.footer-copy { font-size: 0.78rem; opacity: 0.5; }
-
-/* ════ REVEAL ANIMATION ════ */
-.reveal { opacity: 0; transform: translateY(26px); transition: opacity 0.7s ease, transform 0.7s ease; }
-.reveal.active { opacity: 1; transform: none; }
-
-/* ════════════════════════════════════════
-   RESPONSIVE — TABLET (≤ 900px)
-════════════════════════════════════════ */
-@media (max-width: 900px) {
-    .footer-grid { grid-template-columns: 1fr 1fr; }
-    .footer-grid > div:first-child { grid-column: 1 / -1; }
-
-    .nav-menu {
-        display: none;
-        position: fixed;
-        top: 68px;
-        left: 0; right: 0;
-        background: var(--primary-dark);
-        flex-direction: column;
-        align-items: stretch;
-        padding: 1rem;
-        gap: 0.25rem;
-        border-top: 1px solid rgba(255,255,255,0.08);
-        max-height: calc(100svh - 68px);
-        overflow-y: auto;
-        z-index: 999;
-    }
-    .nav-menu.active { display: flex; }
-    .nav-menu a {
-        font-size: 1rem;
-        padding: 0.8rem 1rem;
-        border-radius: 8px;
-    }
-    .hamburger { display: flex; }
-    .dropdown-content {
-        position: static;
-        display: none;
-        box-shadow: none;
-        border: none;
-        border-radius: 8px;
-        background: rgba(255,255,255,0.05);
-        margin-top: 0.25rem;
-    }
-    .dropdown.open .dropdown-content { display: block; }
-}
-
-/* ════════════════════════════════════════
-   RESPONSIVE — MOBILE (≤ 600px)
-════════════════════════════════════════ */
-@media (max-width: 600px) {
-    .logo-container img { height: 32px; }
-    .slogan { display: none; }
-
-    .hero-content h1 { font-size: clamp(1.7rem, 8vw, 2.4rem); }
-    .hero-content p { font-size: 0.95rem; }
-
-    .hero-vef { gap: 1.2rem; }
-    .vef-letter { font-size: 2rem; }
-
-    .btn { padding: 0.75rem 1.4rem; font-size: 0.88rem; }
-    .hero-buttons { flex-direction: column; align-items: stretch; gap: 0.7rem; }
-    .hero-buttons .btn,
-    .hero-buttons .btn-socios { text-align: center; justify-content: center; }
-
-    .stats-inner { flex-direction: column; gap: 0; }
-    .stat-block {
-        flex-direction: row;
-        gap: 0.8rem;
-        border-right: none;
-        border-bottom: 1px solid rgba(255,255,255,0.08);
-        padding: 0.7rem 1rem;
-        text-align: left;
-        min-width: unset;
-    }
-    .stat-block:last-child { border-bottom: none; }
-    .stat-n { font-size: 0.95rem; white-space: nowrap; }
-    .stat-l { font-size: 0.75rem; }
-
-    .section-title { font-size: clamp(1.4rem, 6vw, 1.9rem); }
-
-    .mv-grid { grid-template-columns: 1fr; gap: 1.2rem; }
-    .valores-grid { grid-template-columns: 1fr; }
-    .principios-grid { grid-template-columns: 1fr 1fr; }
-    .pillars-grid { grid-template-columns: 1fr; }
-    .legacy-grid { grid-template-columns: 1fr; }
-    .lemas-container { grid-template-columns: 1fr; }
-
-    .diff-table th, .diff-table td { padding: 0.7rem 0.9rem; font-size: 0.82rem; }
-
-    .footer-grid { grid-template-columns: 1fr; gap: 1.5rem; }
-    .footer-bottom { flex-direction: column; gap: 0.4rem; }
-
-    .carrusel-img { height: 36px; }
-    .carrusel-track { gap: 2rem; }
-}
-
-/* ════════════════════════════════════════
-   RESPONSIVE — TINY (≤ 360px)
-════════════════════════════════════════ */
-@media (max-width: 360px) {
-    .principios-grid { grid-template-columns: 1fr; }
-    .hero-content h1 { font-size: 1.55rem; }
 }
 </style>
 </head>
@@ -891,7 +56,7 @@ ul { list-style: none; }
             <li><a href="#valores">Misión y Valores</a></li>
             <li><a href="#contacto">Contacto</a></li>
             <li><a href="socios.html">Socios Comerciales</a></li>
-            <li class="dropdown" id="dropdownMenu">
+            <li class="dropdown">
                 <a href="#" class="dropbtn">Más ▾</a>
                 <div class="dropdown-content">
                     <a href="#servicios">Servicios</a>
@@ -908,7 +73,7 @@ ul { list-style: none; }
     </nav>
 </header>
 
-<!-- ══ HERO CON VIDEO ═══════════════════ -->
+<!-- ══ HERO CON VIDEO ABB ═══════════════ -->
 <section class="hero">
     <div class="video-container">
         <video autoplay muted loop playsinline>
@@ -937,8 +102,8 @@ ul { list-style: none; }
         </div>
         <div class="hero-buttons">
             <a href="proyectos.html" class="btn btn-primary">Solicitar Cotización</a>
-            <a href="#servicios" class="btn btn-secondary">Ver Servicios</a>
-            <a href="socios.html" class="btn-socios">🤝 Socios</a>
+            <a href="#servicios" class="btn btn-secondary">Ver Proyectos</a>
+
         </div>
     </div>
 </section>
@@ -973,7 +138,9 @@ ul { list-style: none; }
 <section class="section" id="mision">
     <div class="container">
         <div class="section-head reveal">
-            <span class="section-tag-label">01 — Propósito Estratégico</span>
+            <div style="text-align:center; margin-bottom:2rem;">
+                <span class="section-tag-label">01 — Propósito Estratégico</span>
+            </div>
             <h2 class="section-title">Misión y Visión</h2>
         </div>
         <div class="mv-grid reveal">
@@ -1005,7 +172,7 @@ ul { list-style: none; }
 <!-- ══ 02 VALORES ════════════════════════ -->
 <section class="section section-alt" id="valores">
     <div class="container">
-        <div style="text-align:center; margin-bottom:1.5rem;" class="reveal">
+        <div class="reveal" style="text-align:center; margin-bottom:2rem;">
             <span class="section-tag-label">02 — Fundamentos</span>
         </div>
         <h2 class="section-title reveal">Valores Corporativos</h2>
@@ -1050,7 +217,7 @@ ul { list-style: none; }
 <!-- ══ 03 DIFERENCIACIÓN ══════════════════ -->
 <section class="section" id="diferenciacion">
     <div class="container">
-        <div style="text-align:center; margin-bottom:1.5rem;" class="reveal">
+        <div class="reveal" style="text-align:center; margin-bottom:2rem;">
             <span class="section-tag-label">03 — Ventaja Competitiva</span>
         </div>
         <h2 class="section-title reveal">¿Por qué VEF?</h2>
@@ -1091,7 +258,9 @@ ul { list-style: none; }
             </table>
         </div>
         <div class="highlight-box reveal">
-            "No vendemos automatización — vendemos tranquilidad operativa medible en horas de producción recuperadas. Con la diferencia: respuesta inmediata cuando la lentitud de otros pone en riesgo tu operación."
+           "No vendemos automatización — vendemos tranquilidad operativa medible en horas de producción recuperadas.
+            Con la diferencia: respuesta inmediata cuando la lentitud de otros pone en riesgo tu operación. "
+
         </div>
         <div class="lemas-container reveal">
             <div class="lema-card">
@@ -1109,7 +278,7 @@ ul { list-style: none; }
 <!-- ══ 04 SERVICIOS ═══════════════════════ -->
 <section class="section section-alt" id="servicios">
     <div class="container">
-        <div style="text-align:center; margin-bottom:1.5rem;" class="reveal">
+        <div class="reveal" style="text-align:center; margin-bottom:2rem;">
             <span class="section-tag-label">04 — Líneas de Servicio</span>
         </div>
         <h2 class="section-title reveal">Pilares de Servicio</h2>
@@ -1168,7 +337,7 @@ ul { list-style: none; }
                     <li>Alertas automáticas antes de fallas críticas</li>
                     <li>Optimización de firmware y tiempos de scan</li>
                 </ul>
-                <div class="pillar-deliverable">📄 Uptime >99% contractual garantizado</div>
+                <div class="pillar-deliverable">📄 Uptime &gt;99% contractual garantizado</div>
             </div>
         </div>
     </div>
@@ -1185,7 +354,7 @@ ul { list-style: none; }
 <!-- ══ 05 SISTEMAS LEGACY ════════════════ -->
 <section class="section" id="legacy">
     <div class="container">
-        <div style="text-align:center; margin-bottom:1.5rem;" class="reveal">
+        <div class="reveal" style="text-align:center; margin-bottom:2rem;">
             <span class="section-tag-label">05 — Especialidad Diferenciada</span>
         </div>
         <h2 class="section-title reveal">Expertos en Sistemas Legacy</h2>
@@ -1231,44 +400,44 @@ ul { list-style: none; }
 <!-- ══ 06 CARRUSEL MARCAS ════════════════ -->
 <section class="section section-alt" id="marcas">
     <div class="container">
-        <div style="text-align:center; margin-bottom:1.5rem;" class="reveal">
+        <div class="reveal" style="text-align:center; margin-bottom:2rem;">
             <span class="section-tag-label">06 — Marcas con Experiencia</span>
         </div>
         <h2 class="section-title reveal">Marcas que Recomendamos</h2>
     </div>
     <div class="carrusel-wrap reveal">
         <div class="carrusel-track">
-            <img src="images/Bosch_Rexroth-Logo.wine.png" alt="Bosch Rexroth" class="carrusel-img">
-            <img src="images/bosh.png" alt="Bosch" class="carrusel-img">
-            <img src="images/CL200.png" alt="CL200" class="carrusel-img">
-            <img src="images/CL400.png" alt="CL400" class="carrusel-img">
-            <img src="images/Eaton.png" alt="Eaton" class="carrusel-img">
-            <img src="images/Festo-Logo.wine.png" alt="Festo" class="carrusel-img">
-            <img src="images/mitsubishi_PNG110.png" alt="Mitsubishi" class="carrusel-img">
-            <img src="images/pilz-logo-1.png" alt="Pilz" class="carrusel-img">
-            <img src="images/rittal.png" alt="Rittal" class="carrusel-img">
-            <img src="images/rockwell.png" alt="Rockwell" class="carrusel-img">
-            <img src="images/siemens.png" alt="Siemens" class="carrusel-img">
-            <img src="images/Kyence.png" alt="Keyence" class="carrusel-img">
-            <img src="images/finder.png" alt="Finder" class="carrusel-img">
-            <img src="images/wago.png" alt="Wago" class="carrusel-img">
-            <img src="images/widmuller.png" alt="Weidmüller" class="carrusel-img">
-            <!-- duplicado para bucle infinito -->
-            <img src="images/Bosch_Rexroth-Logo.wine.png" alt="Bosch Rexroth" class="carrusel-img">
-            <img src="images/bosh.png" alt="Bosch" class="carrusel-img">
-            <img src="images/CL200.png" alt="CL200" class="carrusel-img">
-            <img src="images/CL400.png" alt="CL400" class="carrusel-img">
-            <img src="images/Eaton.png" alt="Eaton" class="carrusel-img">
-            <img src="images/Festo-Logo.wine.png" alt="Festo" class="carrusel-img">
-            <img src="images/mitsubishi_PNG110.png" alt="Mitsubishi" class="carrusel-img">
-            <img src="images/pilz-logo-1.png" alt="Pilz" class="carrusel-img">
-            <img src="images/rittal.png" alt="Rittal" class="carrusel-img">
-            <img src="images/rockwell.png" alt="Rockwell" class="carrusel-img">
-            <img src="images/siemens.png" alt="Siemens" class="carrusel-img">
-            <img src="images/Kyence.png" alt="Keyence" class="carrusel-img">
-            <img src="images/finder.png" alt="Finder" class="carrusel-img">
-            <img src="images/wago.png" alt="Wago" class="carrusel-img">
-            <img src="images/widmuller.png" alt="Weidmüller" class="carrusel-img">
+            <img src="images/Bosch_Rexroth-Logo.wine.png"     alt="Atornilador"     class="carrusel-img">
+            <img src="images/bosh.png"           alt="Bosch Rexroth"   class="carrusel-img">
+            <img src="images/CL200.png"          alt="Actuador lineal" class="carrusel-img">
+            <img src="images/CL400.png"            alt="Mitsubishi"      class="carrusel-img">
+            <img src="images/Eaton.png"     alt="PLC Siemens"     class="carrusel-img">
+            <img src="images/Festo-Logo.wine.png" alt="S7-1200"         class="carrusel-img">
+            <img src="images/mitsubishi_PNG110.png" alt="Controlador"     class="carrusel-img">
+            <img src="images/pilz-logo-1.png"    alt="Servos Bosch"    class="carrusel-img">
+            <img src="images/rittal.png"     alt="Tableros PM"     class="carrusel-img">
+            <img src="images/rockwell.png"          alt="Keyence"         class="carrusel-img">
+            <img src="images/siemens.png"            alt="Eaton"           class="carrusel-img">
+            <img src="images/Kyence.png"            alt="Festo"           class="carrusel-img">
+            <img src="images/finder.png"            alt="SICK"            class="carrusel-img">
+            <img src="images/wago.png"              alt="SMC"             class="carrusel-img">
+            <img src="images/widmuller.png"        alt="Weidmüller"      class="carrusel-img">
+            <!-- duplicado para bucle -->
+            <img src="images/Bosch_Rexroth-Logo.wine.png"     alt="Atornilador"     class="carrusel-img">
+            <img src="images/bosh.png"           alt="Bosch Rexroth"   class="carrusel-img">
+            <img src="images/CL200.png"          alt="Actuador lineal" class="carrusel-img">
+            <img src="images/CL400.png"            alt="Mitsubishi"      class="carrusel-img">
+            <img src="images/Eaton.png"     alt="PLC Siemens"     class="carrusel-img">
+            <img src="images/Festo-Logo.wine.png" alt="S7-1200"         class="carrusel-img">
+            <img src="images/mitsubishi_PNG110.png" alt="Controlador"     class="carrusel-img">
+            <img src="images/pilz-logo-1.png"    alt="Servos Bosch"    class="carrusel-img">
+            <img src="images/rittal.png"     alt="Tableros PM"     class="carrusel-img">
+            <img src="images/rockwell.png"          alt="Keyence"         class="carrusel-img">
+            <img src="images/siemens.png"            alt="Eaton"           class="carrusel-img">
+            <img src="images/Kyence.png"            alt="Festo"           class="carrusel-img">
+            <img src="images/finder.png"            alt="SICK"            class="carrusel-img">
+            <img src="images/wago.png"              alt="SMC"             class="carrusel-img">
+            <img src="images/widmuller.png"        alt="Weidmüller"      class="carrusel-img">
         </div>
     </div>
     <div class="container">
@@ -1286,8 +455,8 @@ ul { list-style: none; }
                     <span class="footer-brand">VEF Automatización</span>
                 </div>
                 <p class="footer-tagline">"Control Preciso. Resultados Medibles."</p>
-                <p class="footer-contact-item">✉ <a href="mailto:contacto@vefautomatizacion.com">contacto@vefautomatizacion.com</a></p>
-                <p class="footer-contact-item">✉ <a href="mailto:soporte@vefautomatizacion.com">soporte@vefautomatizacion.com</a></p>
+                <p class="footer-contact-item">✉ <a href="mailto:soporte.ventas@vef-automatizacion.com">soporte.ventas@vef-automatizacion.com</a></p>
+                <p class="footer-contact-item">✉ <a href="mailto:Erikagonzalez@vef-automatizacion.com">Erikagonzalez@vef-automatizacion.com</a></p>
                 <p class="footer-contact-item">📱 <a href="https://wa.me/527221157792">+52 (722) 1157792 WhatsApp</a></p>
             </div>
             <div class="footer-col">
@@ -1313,93 +482,12 @@ ul { list-style: none; }
             <div class="footer-col">
                 <h5>Empresa</h5>
                 <ul>
-                    <li><a href="proyectos.html">Cotización</a></li>
-                    <li><a href="socios.html">Socios Comerciales</a></li>
+                    <li><a href="proyectos.html">Solicitar Cotización</a></li>
                     <li><a href="#">LinkedIn</a></li>
+                    <li><a href="#">GitHub Industrial</a></li>
                     <li><a href="#">Aviso de Privacidad</a></li>
-                    <li><a href="#">Términos y Condiciones</a></li>
                 </ul>
             </div>
         </div>
         <div class="footer-bottom">
-            <span class="footer-copy">&copy; 2026 VEF Automatización. Todos los derechos reservados.</span>
-            <span class="footer-copy">Especialistas en PLC · CODESYS · Industria 4.0 · Toluca, México</span>
-        </div>
-    </div>
-</footer>
-
-<script src="js/main.js"></script>
-<script>
-/* ── Dropdown en móvil (tap) ── */
-const dropdownMenu = document.getElementById('dropdownMenu');
-if (dropdownMenu) {
-    dropdownMenu.querySelector('.dropbtn').addEventListener('click', function(e) {
-        if (window.innerWidth <= 900) {
-            e.preventDefault();
-            dropdownMenu.classList.toggle('open');
-        }
-    });
-}
-
-/* ── Hamburger ── */
-const hamburger = document.getElementById('hamburger');
-const navMenu   = document.getElementById('navMenu');
-if (hamburger && navMenu) {
-    hamburger.addEventListener('click', () => {
-        navMenu.classList.toggle('active');
-        hamburger.classList.toggle('active');
-    });
-    navMenu.querySelectorAll('a').forEach(link => {
-        link.addEventListener('click', () => {
-            if (window.innerWidth <= 900) {
-                navMenu.classList.remove('active');
-                hamburger.classList.remove('active');
-            }
-        });
-    });
-}
-
-/* ── Header shadow on scroll ── */
-const header = document.querySelector('.header');
-if (header) {
-    window.addEventListener('scroll', () => {
-        header.style.boxShadow = window.scrollY > 20
-            ? '0 4px 24px rgba(10,42,41,0.25)'
-            : '0 2px 20px rgba(10,42,41,0.08)';
-    }, { passive: true });
-}
-
-/* ── Reveal on scroll ── */
-const revealEls = document.querySelectorAll('.reveal');
-if ('IntersectionObserver' in window) {
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('active');
-                observer.unobserve(entry.target);
-            }
-        });
-    }, { threshold: 0.08, rootMargin: '0px 0px -30px 0px' });
-    revealEls.forEach(el => observer.observe(el));
-} else {
-    revealEls.forEach(el => el.classList.add('active'));
-}
-
-/* ── Active nav on scroll ── */
-const sections = document.querySelectorAll('section[id], div[id], footer[id]');
-const navLinks  = document.querySelectorAll('.nav-menu a[href^="#"]');
-if (sections.length && navLinks.length) {
-    const navObserver = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                navLinks.forEach(link => link.classList.remove('active'));
-                const active = document.querySelector(`.nav-menu a[href="#${entry.target.id}"]`);
-                if (active) active.classList.add('active');
-            }
-        });
-    }, { threshold: 0.35 });
-    sections.forEach(s => navObserver.observe(s));
-}
-</script>
-</body>
-</html>
+            <span cla
