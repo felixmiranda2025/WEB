@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Socios Comerciales | VEF Automatización</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800&family=Barlow:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="icon" type="image/png" href="images/logo-vef.png">
+<style>
+    :root {
+        --bg: #0a0c10;
+        --bg2: #111318;
+        --bg3: #181c24;
+        --accent: #f59e0b;
+        --accent2: #3b82f6;
+        --accent3: #10b981;
+        --text: #e8eaf0;
+        --muted: #8892a4;
+        --border: rgba(255,255,255,0.07);
+        --card-bg: #13161f;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+        background: var(--bg);
+        color: var(--text);
+        font-family: 'Barlow', sans-serif;
+        font-weight: 400;
+        line-height: 1.6;
+        min-height: 100vh;
+    }
+
+    /* ── HEADER ── */
+    .header {
+        position: fixed;
+        top: 0; left: 0; right: 0;
+        z-index: 100;
+        background: rgba(10,12,16,0.92);
+        backdrop-filter: blur(14px);
+        border-bottom: 1px solid var(--border);
+        padding: 0 2rem;
+        height: 64px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+    .header-logo {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        text-decoration: none;
+        color: var(--text);
+    }
+    .header-logo img {
+        height: 36px;
+        width: auto;
+    }
+    .header-logo span {
+        font-family: 'Barlow Condensed', sans-serif;
+        font-weight: 700;
+        font-size: 1.15rem;
+        letter-spacing: 0.05em;
+        color: var(--accent);
+    }
+    .back-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        background: rgba(255,255,255,0.06);
+        border: 1px solid var(--border);
+        color: var(--text);
+        padding: 0.5rem 1.2rem;
+        border-radius: 6px;
+        text-decoration: none;
+        font-size: 0.88rem;
+        font-weight: 500;
+        transition: background 0.2s;
+    }
+    .back-btn:hover { background: rgba(255,255,255,0.12); }
+
+    /* ── HERO ── */
+    .hero {
+        padding-top: 64px;
+        min-height: 340px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: linear-gradient(135deg, #0a0c10 0%, #0f1420 50%, #0a0c10 100%);
+        position: relative;
+        overflow: hidden;
+        text-align: center;
+    }
+    .hero::before {
+        content: '';
+        position: absolute;
+        top: -80px; left: 50%;
+        transform: translateX(-50%);
+        width: 700px; height: 700px;
+        background: radial-gradient(ellipse, rgba(245,158,11,0.08) 0%, transparent 70%);
+        pointer-events: none;
+    }
+    .hero-inner {
+        position: relative;
+        z-index: 1;
+        padding: 3rem 1.5rem;
+    }
+    .hero-eyebrow {
+        display: inline-block;
+        font-family: 'Barlow Condensed', sans-serif;
+        font-size: 0.8rem;
+        font-weight: 600;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: var(--accent);
+        background: rgba(245,158,11,0.1);
+        border: 1px solid rgba(245,158,11,0.25);
+        padding: 0.3rem 1rem;
+        border-radius: 2rem;
+        margin-bottom: 1.4rem;
+    }
+    .hero h1 {
+        font-family: 'Barlow Condensed', sans-serif;
+        font-weight: 800;
+        font-size: clamp(2.5rem, 6vw, 4.5rem);
+        line-height: 1.05;
+        letter-spacing: -0.01em;
+        color: #fff;
+        margin-bottom: 1rem;
+    }
+    .hero h1 em {
+        font-style: normal;
+        color: var(--accent);
+    }
+    .hero p {
+        max-width: 560px;
+        margin: 0 auto;
+        color: var(--muted);
+        font-size: 1.05rem;
+    }
+
+    /* ── PARTNERS GRID ── */
+    .section {
+        padding: 5rem 1.5rem;
+        max-width: 1180px;
+        margin: 0 auto;
+    }
+    .section-label {
+        font-family: 'Barlow Condensed', sans-serif;
+        font-size: 0.78rem;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--muted);
+        margin-bottom: 0.5rem;
+        display: block;
+    }
+    .section-title {
+        font-family: 'Barlow Condensed', sans-serif;
+        font-weight: 700;
+        font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+        color: #fff;
+        margin-bottom: 3rem;
+    }
+
+    /* ── PARTNER CARD ── */
+    .partner-card {
+        background: var(--card-bg);
+        border: 1px solid var(--border);
+        border-radius: 16px;
+        overflow: hidden;
+        margin-bottom: 3.5rem;
+        transition: border-color 0.3s;
+        opacity: 0;
+        transform: translateY(30px);
+        animation: fadeUp 0.6s ease forwards;
+    }
+    .partner-card:nth-child(1) { animation-delay: 0.1s; --card-accent: var(--accent2); }
+    .partner-card:nth-child(2) { animation-delay: 0.25s; --card-accent: var(--accent); }
+    .partner-card:nth-child(3) { animation-delay: 0.4s; --card-accent: var(--accent3); }
+    @keyframes fadeUp { to { opacity: 1; transform: none; } }
+    .partner-card:hover { border-color: var(--card-accent, var(--accent)); }
+
+    .card-header {
+        background: linear-gradient(135deg, rgba(255,255,255,0.04), rgba(255,255,255,0.01));
+        border-bottom: 1px solid var(--border);
+        padding: 2rem 2.5rem;
+        display: flex;
+        align-items: center;
+        gap: 1.5rem;
+        flex-wrap: wrap;
+    }
+    .card-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.4rem;
+        font-family: 'Barlow Condensed', sans-serif;
+        font-size: 0.75rem;
+        font-weight: 600;
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+        padding: 0.3rem 0.9rem;
+        border-radius: 20px;
+        margin-bottom: 0.5rem;
+    }
+    .badge-blue { background: rgba(59,130,246,0.15); color: #60a5fa; border: 1px solid rgba(59,130,246,0.25); }
+    .badge-amber { background: rgba(245,158,11,0.15); color: #fcd34d; border: 1px solid rgba(245,158,11,0.25); }
+    .badge-green { background: rgba(16,185,129,0.15); color: #34d399; border: 1px solid rgba(16,185,129,0.25); }
+
+    .card-title-wrap { flex: 1; min-width: 220px; }
+    .card-company {
+        font-family: 'Barlow Condensed', sans-serif;
+        font-weight: 800;
+        font-size: clamp(1.6rem, 3vw, 2.2rem);
+        color: #fff;
+        letter-spacing: 0.02em;
+        line-height: 1.1;
+    }
+    .card-tagline {
+        color: var(--muted);
+        font-size: 0.9rem;
+        margin-top: 0.25rem;
+    }
+
+    .card-body {
+        padding: 2rem 2.5rem;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 2rem;
+    }
+    @media (max-width: 640px) {
+        .card-body { grid-template-columns: 1fr; }
+        .card-header { padding: 1.5rem; }
+        .card-body { padding: 1.5rem; }
+    }
+
+    .card-desc {
+        color: #b0b8c8;
+        font-size: 0.97rem;
+        line-height: 1.7;
+        grid-column: 1 / -1;
+    }
+
+    .info-block h4 {
+        font-family: 'Barlow Condensed', sans-serif;
+        font-weight: 600;
+        font-size: 0.78rem;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        color: var(--muted);
+        margin-bottom: 0.85rem;
+    }
+    .tag-list {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+    }
+    .tag {
+        background: rgba(255,255,255,0.05);
+        border: 1px solid var(--border);
+        color: #c8d0df;
+        font-size: 0.82rem;
+        padding: 0.28rem 0.75rem;
+        border-radius: 4px;
+        font-weight: 500;
+    }
+
+    .contact-list { list-style: none; }
+    .contact-list li {
+        display: flex;
+        align-items: flex-start;
+        gap: 0.6rem;
+        padding: 0.5rem 0;
+        border-bottom: 1px solid var(--border);
+        font-size: 0.9rem;
+        color: #b0b8c8;
+    }
+    .contact-list li:last-child { border-bottom: none; }
+    .contact-list .icon { font-size: 1rem; flex-shrink: 0; margin-top: 1px; }
+    .contact-list a { color: var(--accent); text-decoration: none; }
+    .contact-list a:hover { text-decoration: underline; }
+
+    .card-footer {
+        padding: 1.25rem 2.5rem;
+        background: rgba(0,0,0,0.2);
+        border-top: 1px solid var(--border);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 1rem;
+    }
+    .card-footer p { font-size: 0.82rem; color: var(--muted); }
+    .visit-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.4rem;
+        padding: 0.55rem 1.4rem;
+        border-radius: 6px;
+        font-size: 0.88rem;
+        font-weight: 600;
+        text-decoration: none;
+        transition: opacity 0.2s, transform 0.2s;
+        border: none;
+        cursor: pointer;
+    }
+    .visit-btn:hover { opacity: 0.85; transform: translateY(-1px); }
+    .btn-blue { background: #2563eb; color: #fff; }
+    .btn-amber { background: var(--accent); color: #000; }
+    .btn-green { background: #059669; color: #fff; }
+
+    /* ── FOOTER ── */
+    .footer {
+        background: var(--bg2);
+        border-top: 1px solid var(--border);
+        text-align: center;
+        padding: 2rem;
+        color: var(--muted);
+        font-size: 0.85rem;
+    }
+    .footer a { color: var(--accent); text-decoration: none; }
+
+    /* ── DIVIDER ── */
+    .divider {
+        width: 60px;
+        height: 3px;
+        background: var(--accent);
+        margin: 0 auto 2rem;
+        border-radius: 2px;
+    }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="header">
+    <a href="index.html" class="header-logo">
+        <img src="assets/VEF.png" alt="VEF Automatización">
+        <span>VEF Automatización</span>
+    </a>
+    <a href="index.html" class="back-btn">← Regresar al Inicio</a>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+    <div class="hero-inner">
+        <span class="hero-eyebrow">Red de Alianzas Estratégicas</span>
+        <h1>Nuestros <em>Socios</em><br>Comerciales</h1>
+        <p>Empresas con las que colaboramos para ofrecer soluciones industriales integrales, desde maquinado de precisión hasta automatización avanzada.</p>
+    </div>
+</section>
+
+<!-- PARTNERS -->
+<main class="section">
+    <span class="section-label">03 Socios — Red de Valor</span>
+    <h2 class="section-title">Alianzas que Potencian Resultados</h2>
+    <div class="divider"></div>
+
+    <!-- ── EACSA ── -->
+    <article class="partner-card">
+        <div class="card-header">
+            <div class="card-title-wrap">
+                <span class="card-badge badge-blue">🏭 Automatización &amp; Control</span>
+                <div class="card-company">EACSA Automatización</div>
+                <div class="card-tagline">Equipos de Automatización y Control Ángeles · Ciudad de México</div>
+            </div>
+        </div>
+        <div class="card-body">
+            <p class="card-desc">
+                EACSA es una empresa mexicana nacida de la industria nacional, especializada en la distribución y suministro de productos y servicios de automatización industrial de alta calidad. Desde su rol como distribuidor autorizado de marcas líderes internacionales, EACSA ofrece soluciones integrales que van desde la integración de componentes hasta proyectos llave en mano. Su equipo técnico altamente capacitado garantiza atención personalizada con enfoque en resultados reales para cada cliente.
+            </p>
+            <div class="info-block">
+                <h4>Especialidades</h4>
+                <div class="tag-list">
+                    <span class="tag">Sensores industriales</span>
+                    <span class="tag">PLCs &amp; Control</span>
+                    <span class="tag">Seguridad funcional</span>
+                    <span class="tag">Distribución autorizada</span>
+                    <span class="tag">Proyectos llave en mano</span>
+                    <span class="tag">Instrumentación</span>
+                    <span class="tag">Redes industriales</span>
+                    <span class="tag">HMI &amp; SCADA</span>
+                </div>
+            </div>
+            <div class="info-block">
+                <h4>Contacto</h4>
+                <ul class="contact-list">
+                    <li><span class="icon">📍</span> C. 5 de Febrero 768, Álamos, 03400 CDMX</li>
+                    <li><span class="icon">✉️</span> <a href="mailto:ventas@eacsamexico.com.mx">ventas@eacsamexico.com.mx</a></li>
+                    <li><span class="icon">✉️</span> <a href="mailto:ventas1@eacsamexico.com.mx">ventas1@eacsamexico.com.mx</a></li>
+                    <li><span class="icon">🌐</span> <a href="https://www.eacsaautomatizacion.com" target="_blank" rel="noopener">www.eacsaautomatizacion.com</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="card-footer">
+            <p>Distribuidor autorizado de marcas líderes — Wago, Schmersal y más</p>
+            <a href="https://www.eacsaautomatizacion.com" target="_blank" rel="noopener" class="visit-btn btn-blue">Visitar sitio →</a>
+        </div>
+    </article>
+
+    <!-- ── HMO ── -->
+    <article class="partner-card">
+        <div class="card-header">
+            <div class="card-title-wrap">
+                <span class="card-badge badge-amber">⚙️ Comercialización Industrial</span>
+                <div class="card-company">HMO Automatización</div>
+                <div class="card-tagline">HMO Automatización y Comercialización Industrial · Toluca, Estado de México</div>
+            </div>
+        </div>
+        <div class="card-body">
+            <p class="card-desc">
+                HMO Automatización y Comercialización Industrial es una empresa dedicada al suministro de una amplia variedad de productos industriales de marcas reconocidas, con altos estándares de calidad. Especializada en hidráulica, neumática, movimiento lineal, accionamientos y reparaciones industriales, HMO ofrece soluciones confiables y adaptadas a las necesidades específicas de cada cliente, asegurando que las plantas cuenten con la tecnología y los recursos adecuados para optimizar sus procesos productivos.
+            </p>
+            <div class="info-block">
+                <h4>Líneas de Producto</h4>
+                <div class="tag-list">
+                    <span class="tag">Hidráulica</span>
+                    <span class="tag">Neumática</span>
+                    <span class="tag">Movimiento Lineal</span>
+                    <span class="tag">Accionamientos</span>
+                    <span class="tag">Reparaciones industriales</span>
+                    <span class="tag">Componentes eléctricos</span>
+                    <span class="tag">Mecánica industrial</span>
+                    <span class="tag">Control de movimiento</span>
+                </div>
+            </div>
+            <div class="info-block">
+                <h4>Contacto</h4>
+                <ul class="contact-list">
+                    <li><span class="icon">📍</span> Melero y Piña #511, Int. 102, San Sebastián, Toluca, Edo. Méx. CP 50150</li>
+                    <li><span class="icon">📱</span> <a href="tel:5572266291">+52 55 7226 6291</a></li>
+                    <li><span class="icon">✉️</span> <a href="mailto:ventas@hmoayc.com">ventas@hmoayc.com</a></li>
+                    <li><span class="icon">🌐</span> <a href="http://www.hmoayc.com" target="_blank" rel="noopener">www.hmoayc.com</a></li>
+                    <li><span class="icon">📸</span> <a href="https://www.instagram.com/hmo_automatizacion/" target="_blank" rel="noopener">@hmo_automatizacion</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="card-footer">
+            <p>Productos industriales de marcas reconocidas con altos estándares de calidad</p>
+            <a href="http://www.hmoayc.com" target="_blank" rel="noopener" class="visit-btn btn-amber">Visitar sitio →</a>
+        </div>
+    </article>
+
+    <!-- ── MA&IZA ── -->
+    <article class="partner-card">
+        <div class="card-header">
+            <div class="card-title-wrap">
+                <span class="card-badge badge-green">🔩 Maquinado &amp; Manufactura</span>
+                <div class="card-company">MA&amp;IZA</div>
+                <div class="card-tagline">Servicios de Maquinado y Automatización · Calixtlahuaca, Estado de México</div>
+            </div>
+        </div>
+        <div class="card-body">
+            <p class="card-desc">
+                MA&amp;IZA es una empresa del sector metalmecánico dedicada al servicio de maquinados de precisión. Con una política de calidad centrada en ofrecer soluciones eficaces y resultados inmediatos, cuenta con personal altamente calificado que optimiza la ingeniería, diseño y manufactura de los diversos procesos mediante la mejora continua. Su parque de maquinaria CNC y convencional les permite atender proyectos de alta complejidad dimensional con tiempos de respuesta competitivos.
+            </p>
+            <div class="info-block">
+                <h4>Capacidades de Maquinado</h4>
+                <div class="tag-list">
+                    <span class="tag">CNC HAAS VF-0 (500×400×400 mm)</span>
+                    <span class="tag">CNC HAAS VF-2 (762×406×508 mm)</span>
+                    <span class="tag">Fresa convencional (900×400×400 mm)</span>
+                    <span class="tag">Torno convencional (⌀300 mm / 1000 mm)</span>
+                    <span class="tag">Rectificadora cilíndrica (⌀200 × 400 mm)</span>
+                    <span class="tag">Rectificadora plana (600×400 mm)</span>
+                    <span class="tag">Prototipos funcionales</span>
+                    <span class="tag">Piezas especiales</span>
+                </div>
+            </div>
+            <div class="info-block">
+                <h4>Contacto</h4>
+                <ul class="contact-list">
+                    <li><span class="icon">📍</span> Calle Libertad, 50280, Calixtlahuaca, Estado de México</li>
+                    <li><span class="icon">👤</span> Sergio Pedraza Hernández</li>
+                    <li><span class="icon">📱</span> <a href="tel:7225554597">722-555-4597</a></li>
+                    <li><span class="icon">✉️</span> <a href="mailto:sergiopedraza_kubo@hotmail.com">sergiopedraza_kubo@hotmail.com</a></li>
+                    <li><span class="icon">👤</span> Alfonso Vallejo Maruri</li>
+                    <li><span class="icon">📱</span> <a href="tel:7226195367">722-619-5367</a></li>
+                    <li><span class="icon">✉️</span> <a href="mailto:alfonzomarury@gmail.com">alfonzomarury@gmail.com</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="card-footer">
+            <p>Socio estratégico en maquinado de precisión y manufactura metalmecánica</p>
+            <a href="mailto:sergiopedraza_kubo@hotmail.com" class="visit-btn btn-green">Contactar →</a>
+        </div>
+    </article>
+
+</main>
+
+<!-- FOOTER -->
+<footer class="footer">
+    <p>© 2026 <a href="index.html">VEF Automatización</a> · Página de Socios Comerciales · Engineering the Future</p>
+</footer>
+
+</body>
+</html>
