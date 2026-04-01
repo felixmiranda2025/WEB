@@ -7,7 +7,12 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Segoe+UI:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../WEB/css/Style.css">
+<link rel="stylesheet" href="css/style.css">
+<style>
+.reveal { animation: revealFade 0.7s ease both; }
+@keyframes revealFade { from { opacity: 0; transform: translateY(26px); } to { opacity: 1; transform: none; } }
+.reveal.active { opacity: 1; transform: none; }
+</style>
 </head>
 <body>
 
@@ -385,7 +390,7 @@
             <img src="images/Kyence.png"            alt="Festo"           class="carrusel-img">
             <img src="images/finder.png"            alt="SICK"            class="carrusel-img">
             <img src="images/wago.png"              alt="SMC"             class="carrusel-img">
-            <img src="IMG/widmuller.png"        alt="Weidmüller"      class="carrusel-img">
+            <img src="images/widmuller.png"        alt="Weidmüller"      class="carrusel-img">
             <!-- duplicado para bucle -->
             <img src="images/Bosch_Rexroth-Logo.wine.png"     alt="Atornilador"     class="carrusel-img">
             <img src="images/bosh.png"           alt="Bosch Rexroth"   class="carrusel-img">
@@ -401,7 +406,7 @@
             <img src="images/Kyence.png"            alt="Festo"           class="carrusel-img">
             <img src="images/finder.png"            alt="SICK"            class="carrusel-img">
             <img src="images/wago.png"              alt="SMC"             class="carrusel-img">
-            <img src="IMG/widmuller.png"        alt="Weidmüller"      class="carrusel-img">
+            <img src="images/widmuller.png"        alt="Weidmüller"      class="carrusel-img">
         </div>
     </div>
     <div class="container">
@@ -419,8 +424,8 @@
                     <span class="footer-brand">VEF Automatización</span>
                 </div>
                 <p class="footer-tagline">"Control Preciso. Resultados Medibles."</p>
-                <p class="footer-contact-item">✉ <a href="mailto:soporte.ventas@vef-automatizacion.com">soporte.ventas@vef-automatizacion.com</a></p>
-                <p class="footer-contact-item">✉ <a href="mailto:erikagonzalez@vef-automatizacion.com">erikagonzalez@vef-automatizacion.com</a></p>
+                <p class="footer-contact-item">✉ <a href="mailto:ventas@vefautomatizacion.com">ventas@vefautomatizacion.com</a></p>
+                <p class="footer-contact-item">✉ <a href="mailto:ventas@vefautomatizacion.com">ventas@vefautomatizacion.com</a></p>
                 <p class="footer-contact-item">📱 <a href="https://wa.me/527221157792">+52 (722) 1157792 WhatsApp</a></p>
             </div>
             <div class="footer-col">
@@ -453,10 +458,9 @@
                 </ul>
             </div>
         </div>
-        <div clas
         <div class="footer-bottom">
             <span class="footer-copy">&copy; 2026 VEF Automatización. Todos los derechos reservados.</span>
-            <span class="footer-copy">Especialistas en PLC · CODESYS · Industria 4.0 · Toluca, México</span>
+            <span class="footer-copy">Especialistas en PLC &middot; CODESYS &middot; Industria 4.0 &middot; Toluca, México</span>
         </div>
     </div>
 </footer>

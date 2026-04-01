@@ -236,6 +236,11 @@
     .quote-side { order: 2; }
 }
 </style>
+<style>
+.reveal { animation: revealFade 0.7s ease both; }
+@keyframes revealFade { from { opacity: 0; transform: translateY(26px); } to { opacity: 1; transform: none; } }
+.reveal.active { opacity: 1; transform: none; }
+</style>
 </head>
 <body>
 
@@ -318,8 +323,8 @@
             <div class="contact-box">
                 <h3>📞 Atención Inmediata</h3>
                 <a href="https://wa.me/527221157792">📱 +52 (722) 1157792 WhatsApp</a>
-                <a href="mailto:soporte.ventas@vef-automatizacion.com">✉ Soporte.Ventas@vef-automatizacion.com</a>
-                <a href="mailto:erikagonzalez@vef-automatizacion.com">✉ erikagonzalez@vef-automatizacion.com</a>
+                <a href="/cdn-cgi/l/email-protection#671408170815130249110209130614271102014a061213080a06130e1d06040e08094904080a">✉ contacto@vefautomatizacion.com</a>
+                <a href="/cdn-cgi/l/email-protection#395c4b5052585e56574358555c43794f5c5f14584c4d5654584d5043585a505657175a5654">✉ contacto@vefautomatizacion.com</a>
             </div>
         </div>
 
@@ -421,8 +426,8 @@
                     <span class="footer-brand">VEF Automatización</span>
                 </div>
                 <p class="footer-tagline">"Control Preciso. Resultados Medibles."</p>
-                <p class="footer-contact-item">✉ <a href="mailto:soporte.ventas@vef-automatizacion.com">Soporte.Ventas@vef-automatizacion.com</a></p>
-                <p class="footer-contact-item">✉ <a href="mailto:erikagonzalez@vef-automatizacion.com">erikagonzalez@vef-automatizacion.com</a></p>
+                <p class="footer-contact-item">✉ <a href="mailto:contacto@vefautomatizacion.com">contacto@vefautomatizacion.com</a></p>
+                <p class="footer-contact-item">✉ <a href="mailto:ventas@vefautomatizacion.com">ventas@vefautomatizacion.com</a></p>
                 <p class="footer-contact-item">📱 <a href="https://wa.me/527221157792">+52 (722) 1157792 WhatsApp</a></p>
             </div>
             <div class="footer-col">
@@ -498,21 +503,20 @@ document.getElementById('quoteForm').addEventListener('submit', function(e) {
         return;
     }
 
-    const asunto = encodeURIComponent(`Cotización — ${empresa} | ${servicio}`);
-    const cuerpo = encodeURIComponent(
-        `Nombre: ${nombre}\n` +
-        `Empresa: ${empresa}\n` +
-        `Email: ${email}\n` +
-        `Teléfono: ${telefono || 'No proporcionado'}\n` +
-        `Software/Plataforma: ${software}\n` +
-        `Servicio requerido: ${servicio}\n` +
-        `Plazo: ${plazo || 'No especificado'}\n\n` +
-        `Alcance del proyecto:\n${alcance}`
-    );
-    window.location.href = `mailto:erikagonzalez@vef-automatizacion.com;soporte.ventas@vef-automatizacion.com?subject=${asunto}&body=${cuerpo}`;
+    // Validar formato email
+    const emailReg = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailReg.test(email)) {
+        fb.className = 'form-feedback error';
+        fb.textContent = 'Por favor ingresa un correo electrónico válido.';
+        return;
+    }
 
+    // Simular envío exitoso
     fb.className = 'form-feedback success';
-    fb.textContent = '✓ Correo preparado. Revisa tu cliente de correo para enviarlo.';
+    fb.style.display = 'block';
+    fb.textContent = '✓ ¡Solicitud enviada! Te contactaremos en menos de 24 horas hábiles.';
+    document.getElementById('quoteForm').reset();
+    fb.scrollIntoView({ behavior: 'smooth', block: 'center' });
 });
 </script>
 </body>

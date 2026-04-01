@@ -759,10 +759,13 @@ body {
    REVEAL
 ══════════════════════════════════ */
 .reveal {
-    opacity: 0;
-    transform: translateY(30px);
-    transition: opacity .8s ease, transform .8s ease;
+    animation: revealFade 0.7s ease both;
 }
+@keyframes revealFade {
+    from { opacity: 0; transform: translateY(28px); }
+    to   { opacity: 1; transform: none; }
+}
+/* Mantener compatibilidad con JS si se usa */
 .reveal.active { opacity: 1; transform: none; }
 
 /* ══════════════════════════════════
@@ -804,3 +807,6 @@ body {
     .hero-vef { gap: 1.5rem; }
     .slogan { display: none; }
 }
+/* ── NO-JS FALLBACK ──
+   Si main.js no carga, mostrar todo el contenido */
+.no-js .reveal { opacity: 1 !important; transform: none !important; }
