@@ -13,25 +13,31 @@
 .reveal { animation: revealFade 0.7s ease both; }
 @keyframes revealFade { from { opacity: 0; transform: translateY(26px); } to { opacity: 1; transform: none; } }
 .reveal.active { opacity: 1; transform: none; }
+.hero-buttons {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    gap: 1rem !important;
+    justify-content: center !important;
+    align-items: center !important;
+}
 .btn-socios {
-    background: linear-gradient(135deg, #f59e0b, #d97706);
+    background: transparent;
     color: #fff !important;
-    border: none;
+    border: 2px solid rgba(255,255,255,0.6);
     padding: 0.85rem 1.8rem;
-    border-radius: 6px;
+    border-radius: 50px;
     font-weight: 600;
     font-size: 0.95rem;
     letter-spacing: 0.02em;
     text-decoration: none;
-    transition: transform 0.2s, box-shadow 0.2s;
+    transition: background 0.2s, border-color 0.2s;
     display: inline-flex;
     align-items: center;
     gap: 0.4rem;
-    box-shadow: 0 4px 15px rgba(245,158,11,0.35);
 }
 .btn-socios:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 25px rgba(245,158,11,0.5);
+    background: rgba(255,255,255,0.1);
+    border-color: #fff;
 }
 </style>
 </head>
@@ -49,6 +55,7 @@
             <li><a href="proyectos.html">Proyectos</a></li>
             <li><a href="#valores">Misión y Valores</a></li>
             <li><a href="#contacto">Contacto</a></li>
+            <li><a href="socios.html">Socios Comerciales</a></li>
             <li class="dropdown">
                 <a href="#" class="dropbtn">Más ▾</a>
                 <div class="dropdown-content">
