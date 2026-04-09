@@ -3,25 +3,31 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>VEF Automatización | Solicita tu Cotización</title>
+<title>VEF Automatización | Proyectos Realizados</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
 /* ════════════════════════════════════════
-   VEF — PROYECTOS / COTIZACIÓN — CSS RESPONSIVO
+   VEF — PROYECTOS REALIZADOS — CSS
+   Página que muestra los proyectos realizados por VEF Automatización.
+   Incluye comparador antes/después, tarjetas de proyecto, filtros y lightbox.
 ════════════════════════════════════════ */
+
+/* ── Variables globales: colores, sombras y transiciones reutilizables ── */
 :root {
-    --primary-dark:   #0a2a29;
-    --primary-medium: #1a5c58;
-    --primary-light:  #2a8b7c;
+    --primary-dark:   #0a2a29; /* Verde muy oscuro — fondo principal */
+    --primary-medium: #1a5c58; /* Verde medio — botones y acentos */
+    --primary-light:  #2a8b7c; /* Verde claro — hover y destacados */
+    --secondary:      #F4B740; /* Amarillo dorado — color de acento secundario */
     --white:          #ffffff;
-    --neutral-light:  #f4f7f6;
-    --neutral-dark:   #2d3748;
-    --gray:           #e2e8f0;
-    --shadow:         0 8px 32px rgba(10,42,41,0.12);
-    --transition:     all 0.25s ease;
-    --radius:         14px;
+    --neutral-light:  #f4f7f6; /* Fondo claro de secciones */
+    --neutral-dark:   #2d3748; /* Texto oscuro principal */
+    --gray:           #e2e8f0; /* Bordes y separadores */
+    --shadow:         0 8px 32px rgba(10,42,41,0.12);  /* Sombra normal de tarjetas */
+    --shadow-hover:   0 16px 48px rgba(10,42,41,0.22); /* Sombra al hacer hover */
+    --transition:     all 0.3s ease; /* Transición suave para animaciones */
+    --radius:         16px;          /* Bordes redondeados estándar */
 }
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -70,6 +76,7 @@ ul { list-style: none; }
     flex-shrink: 0;
 }
 .logo-container img { height: 40px; width: auto; object-fit: contain; }
+.logo-text { font-size: 1.1rem; font-weight: 700; color: #fff; letter-spacing: 0.02em; }
 .slogan { font-size: 0.78rem; font-weight: 500; color: rgba(255,255,255,0.6); letter-spacing: 0.06em; text-transform: uppercase; }
 .nav-menu {
     display: flex;
@@ -86,7 +93,15 @@ ul { list-style: none; }
     transition: var(--transition);
     white-space: nowrap;
 }
-.nav-menu a:hover { color: #fff; background: rgba(255,255,255,0.1); }
+.nav-menu a:hover, .nav-menu a.active { color: #fff; background: rgba(255,255,255,0.12); }
+.nav-cta {
+    background: var(--primary-light) !important;
+    color: #fff !important;
+    border-radius: 8px !important;
+    padding: 0.5rem 1rem !important;
+    font-weight: 600 !important;
+}
+.nav-cta:hover { background: #2a8b7c !important; filter: brightness(1.1); }
 .hamburger {
     display: none;
     flex-direction: column;
@@ -102,10 +117,10 @@ ul { list-style: none; }
 .hamburger.active .bar:nth-child(2) { opacity: 0; }
 .hamburger.active .bar:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
 
-/* ════ PROJECTS HERO ════ */
+/* ════ HERO ════ */
 .projects-hero {
-    background: linear-gradient(135deg, var(--primary-dark), var(--primary-medium));
-    padding: clamp(7rem, 15vw, 10rem) clamp(1rem, 5vw, 2rem) clamp(3rem, 6vw, 5rem);
+    background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary-medium) 60%, var(--primary-light) 100%);
+    padding: clamp(7rem, 14vw, 10rem) clamp(1rem, 5vw, 2rem) clamp(3.5rem, 7vw, 5rem);
     text-align: center;
     color: var(--white);
     position: relative;
@@ -115,204 +130,527 @@ ul { list-style: none; }
     content: '';
     position: absolute; inset: 0;
     background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 0 L60 30 L30 60 L0 30 Z' fill='rgba(255,255,255,0.03)'/%3E%3C/svg%3E");
-    opacity: .12;
+    opacity: .15;
+}
+.hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(255,255,255,0.12);
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 50px;
+    padding: 0.4rem 1.1rem;
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.9);
+    margin-bottom: 1.4rem;
+    position: relative;
 }
 .projects-hero h1 {
-    font-size: clamp(1.8rem, 5vw, 3rem);
+    font-size: clamp(2rem, 5.5vw, 3.2rem);
     margin-bottom: 1rem;
     position: relative;
-    font-weight: 700;
-    letter-spacing: -0.02em;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    line-height: 1.15;
 }
 .projects-hero p {
     font-size: clamp(1rem, 2vw, 1.15rem);
-    max-width: 700px;
+    max-width: 680px;
+    margin: 0 auto 2rem;
+    opacity: .88;
+    position: relative;
+}
+.hero-stats {
+    display: flex;
+    justify-content: center;
+    gap: clamp(1.5rem, 5vw, 4rem);
+    flex-wrap: wrap;
+    position: relative;
+}
+.hero-stat { text-align: center; }
+.hero-stat strong { display: block; font-size: clamp(1.8rem, 4vw, 2.5rem); font-weight: 800; color: var(--secondary); }
+.hero-stat span { font-size: 0.82rem; opacity: 0.8; text-transform: uppercase; letter-spacing: 0.06em; }
+
+/* ════ FILTROS ════ */
+.filter-section {
+    background: var(--white);
+    padding: 2rem 0 1rem;
+    position: sticky;
+    top: 68px;
+    z-index: 100;
+    box-shadow: 0 4px 20px rgba(10,42,41,.06);
+}
+.filter-bar {
+    display: flex;
+    gap: 0.6rem;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 0 clamp(1rem, 4vw, 2rem);
+}
+.filter-btn {
+    background: var(--neutral-light);
+    border: 2px solid transparent;
+    border-radius: 50px;
+    padding: 0.5rem 1.2rem;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--neutral-dark);
+    cursor: pointer;
+    transition: var(--transition);
+    font-family: 'Inter', sans-serif;
+}
+.filter-btn:hover { border-color: var(--primary-light); color: var(--primary-medium); }
+.filter-btn.active {
+    background: var(--primary-dark);
+    color: var(--white);
+    border-color: var(--primary-dark);
+}
+
+/* ════ PROYECTOS GRID ════
+   Sección principal que contiene el título, subtítulo y la cuadrícula
+   de todas las tarjetas de proyecto. */
+.projects-section {
+    padding: clamp(2.5rem, 6vw, 4.5rem) 0 clamp(3rem, 8vw, 6rem);
+    background: var(--neutral-light); /* fondo gris claro para contrastar con las tarjetas blancas */
+}
+/* Encabezado centrado de la sección ("Proyectos Realizados") */
+.section-header {
+    text-align: center;
+    margin-bottom: clamp(2rem, 5vw, 3.5rem);
+}
+.section-header h2 {
+    font-size: clamp(1.6rem, 4vw, 2.4rem);
+    color: var(--primary-dark);
+    font-weight: 800;
+    letter-spacing: -0.02em;
+}
+.section-header p {
+    color: var(--neutral-dark);
+    opacity: 0.7;
+    margin-top: 0.6rem;
+    font-size: 1rem;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+/* Cuadrícula responsiva: 1 columna en móvil, 2 en escritorio (mín 520px por tarjeta) */
+.projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 520px), 1fr));
+    gap: clamp(1.5rem, 3vw, 2.5rem);
+    max-width: 1140px;
     margin: 0 auto;
-    opacity: .9;
+    padding: 0 clamp(1rem, 4vw, 2rem);
+}
+
+/* ════ TARJETA DE PROYECTO ════
+   Cada tarjeta muestra el comparador de fotos, etiquetas, título,
+   descripción, lista de beneficios y métricas del proyecto. */
+.project-card {
+    background: var(--white);
+    border-radius: var(--radius);
+    overflow: hidden;   /* recorta el comparador de fotos en las esquinas */
+    box-shadow: var(--shadow);
+    transition: var(--transition);
+    display: flex;
+    flex-direction: column; /* apila: foto → hint → body */
+}
+/* Efecto de elevación al pasar el mouse sobre la tarjeta */
+.project-card:hover {
+    transform: translateY(-6px);
+    box-shadow: var(--shadow-hover);
+}
+
+/* ── COMPARADOR ANTES / DESPUÉS ──
+   Contenedor de las dos fotos superpuestas. El usuario arrastra el
+   divisor horizontal para revelar la imagen "antes" o "después". */
+.compare-wrapper {
+    position: relative;
+    width: 100%;
+    max-height: 480px;   /* altura máxima de la zona de fotos */
+    overflow: hidden;
+    background: #0a2a29; /* fondo oscuro visible si la foto no llena el alto */
+    cursor: col-resize;  /* cursor de redimensión horizontal */
+    user-select: none;   /* evita selección de texto al arrastrar */
+}
+/* Imagen ANTES: ocupa toda la caja, visible debajo de la imagen después */
+.compare-before {
+    display: block;
+    width: 100%;
+    height: 480px;
+    object-fit: contain;      /* muestra la foto completa sin recortar */
+    object-position: center;
+}
+/* Imagen DESPUÉS: superpuesta, se revela de izquierda a derecha con clip-path */
+.compare-after {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    object-position: center;
+    clip-path: inset(0 50% 0 0); /* arranca cubriendo la mitad derecha */
+    transition: clip-path 0s;    /* sin transición para que siga el mouse en tiempo real */
+}
+.compare-img { display: block; }
+/* Línea blanca vertical que separa visualmente antes/después */
+.compare-divider {
+    position: absolute;
+    top: 0; bottom: 0;
+    left: 50%;
+    width: 3px;
+    background: var(--white);
+    transform: translateX(-50%);
+    pointer-events: none;
+    z-index: 3;
+}
+/* Círculo con flechas ◀▶ que el usuario arrastra */
+.compare-handle {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 44px;
+    height: 44px;
+    background: var(--white);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 4;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.35);
+    pointer-events: none;
+    font-size: 1rem;
+    color: var(--primary-dark);
+    font-weight: 700;
+}
+/* Etiquetas "ANTES" / "DESPUÉS" en la parte inferior del comparador */
+.label-antes, .label-despues {
+    position: absolute;
+    bottom: 12px;
+    z-index: 5;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 4px 12px;
+    border-radius: 50px;
+    pointer-events: none;
+}
+.label-antes {
+    right: 12px;
+    background: rgba(10,42,41,0.8);
+    color: rgba(255,255,255,0.9);
+}
+.label-despues {
+    left: 12px;
+    background: var(--primary-light);
+    color: #fff;
+}
+
+/* ── BOTÓN EXPANDIR ──
+   Ícono en la esquina del comparador; abre el lightbox con la foto completa. */
+.expand-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    z-index: 10;
+    width: 34px;
+    height: 34px;
+    background: rgba(10,42,41,0.75);
+    border: none;
+    border-radius: 8px;
+    color: #fff;
+    font-size: 1rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(4px);
+    transition: background 0.2s;
+    pointer-events: all;
+}
+.expand-btn:hover { background: rgba(10,42,41,0.95); }
+
+/* ── LIGHTBOX ──
+   Modal de pantalla completa que muestra la foto sin recortar.
+   Se activa al pulsar el botón expandir del comparador. */
+#lightbox {
+    display: none;          /* oculto por defecto */
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    background: rgba(0,0,0,0.92);
+    align-items: center;
+    justify-content: center;
+    cursor: zoom-out;       /* clic fuera de la imagen lo cierra */
+}
+#lightbox.open { display: flex; } /* clase añadida por JS al abrir */
+#lightbox img {
+    max-width: 92vw;
+    max-height: 90vh;
+    object-fit: contain;   /* foto completa sin recortar */
+    border-radius: 8px;
+    box-shadow: 0 8px 60px rgba(0,0,0,0.6);
+    cursor: default;
+}
+/* Botón ✕ para cerrar el lightbox */
+#lightbox-close {
+    position: fixed;
+    top: 18px;
+    right: 22px;
+    background: none;
+    border: none;
+    color: #fff;
+    font-size: 2rem;
+    cursor: pointer;
+    line-height: 1;
+    opacity: 0.8;
+}
+#lightbox-close:hover { opacity: 1; }
+/* Etiqueta con el nombre de la foto (alt text) en la parte inferior */
+#lightbox-label {
+    position: fixed;
+    bottom: 18px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: rgba(255,255,255,0.7);
+    font-size: 0.82rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    background: rgba(0,0,0,0.5);
+    padding: 4px 14px;
+    border-radius: 20px;
+}
+
+/* ── PLACEHOLDER ──
+   Se muestra cuando la imagen del proyecto aún no está disponible. */
+.compare-placeholder {
+    width: 100%;
+    aspect-ratio: 16/9;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #0a2a29, #1a5c58);
+    color: rgba(255,255,255,0.5);
+    gap: 0.5rem;
+    font-size: 0.85rem;
+}
+.compare-placeholder .ph-icon { font-size: 2.5rem; opacity: 0.4; }
+
+/* ── INSTRUCCIÓN DESLIZA ──
+   Barra pequeña debajo del comparador que indica al usuario que puede arrastrar. */
+.compare-hint {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.72rem;
+    color: var(--primary-medium);
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    padding: 0.55rem 1.4rem;
+    background: rgba(42,139,124,0.07);
+    justify-content: center;
+}
+
+/* ── FOTOS EXTRA ──
+   Tira de hasta 2 fotos adicionales debajo del comparador antes/después.
+   Cada miniatura abre el lightbox al hacer clic. */
+.extra-photos {
+    display: flex;
+    gap: 4px;
+    padding: 4px;
+    background: rgba(42,139,124,0.04);
+    border-top: 1px solid var(--gray);
+}
+.extra-photos:empty { display: none; }
+.extra-photo {
+    flex: 1;
+    height: 110px;
+    object-fit: cover;
+    cursor: zoom-in;
+    border-radius: 6px;
+    transition: filter 0.2s, transform 0.2s;
+    display: block;
+}
+.extra-photo:hover {
+    filter: brightness(1.08);
+    transform: scale(1.02);
+    z-index: 1;
     position: relative;
 }
 
-/* ════ INFO STRIP ════ */
-.info-strip {
-    background: var(--white);
-    padding: clamp(1.5rem, 4vw, 2.5rem) 0;
-    box-shadow: 0 4px 20px rgba(10,42,41,.06);
+/* ── CUERPO DE LA TARJETA ──
+   Área de texto debajo del comparador: etiquetas, título, descripción,
+   breviario de beneficios y métricas. */
+.card-body {
+    padding: clamp(1.2rem, 3vw, 1.8rem);
+    flex: 1;            /* ocupa el espacio restante de la tarjeta */
+    display: flex;
+    flex-direction: column;
 }
-.info-strip-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1.2rem;
-    max-width: 900px;
-    margin: 0 auto;
-    padding: 0 clamp(1rem, 4vw, 2rem);
+/* Fila de etiquetas de categoría (ej. "Tableros Eléctricos PLC", "Lerma, Mx") */
+.card-tags {
+    display: flex;
+    gap: 0.4rem;
+    flex-wrap: wrap;
+    margin-bottom: 0.9rem;
 }
-.info-chip {
+.tag {
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    padding: 3px 10px;
+    border-radius: 50px;
+    background: var(--neutral-light);
+    color: var(--primary-medium);
+    border: 1px solid var(--gray);
+}
+.tag.highlight { background: var(--primary-dark); color: var(--white); border-color: var(--primary-dark); }
+/* Título principal del proyecto */
+.card-title {
+    font-size: clamp(1.05rem, 2vw, 1.25rem);
+    font-weight: 700;
+    color: var(--primary-dark);
+    margin-bottom: 0.5rem;
+    line-height: 1.3;
+}
+/* Ubicación y año del proyecto */
+.card-subtitle {
+    font-size: 0.82rem;
+    color: var(--primary-medium);
+    font-weight: 600;
+    margin-bottom: 0.9rem;
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: 6px;
+}
+/* Párrafo de descripción del problema y solución aplicada */
+.card-desc {
+    font-size: 0.88rem;
+    color: var(--neutral-dark);
+    opacity: 0.82;
+    line-height: 1.7;
+    margin-bottom: 1.2rem;
+}
+
+/* ── BREVIARIO / RESULTADOS ──
+   Caja verde con lista de los beneficios concretos que obtuvo el cliente. */
+.breviario {
     background: var(--neutral-light);
     border-radius: 12px;
-    padding: clamp(1rem, 3vw, 1.2rem) clamp(1rem, 3vw, 1.4rem);
-    border-left: 4px solid var(--primary-light);
-    transition: var(--transition);
+    padding: 1rem 1.2rem;
+    margin-bottom: 1.2rem;
+    border-left: 4px solid var(--primary-light); /* acento verde a la izquierda */
 }
-.info-chip:hover { transform: translateY(-3px); box-shadow: var(--shadow); }
-.info-chip-icon { font-size: 1.6rem; flex-shrink: 0; }
-.info-chip-text strong { display: block; color: var(--primary-dark); font-size: .9rem; }
-.info-chip-text span { font-size: .78rem; color: var(--primary-medium); }
-
-/* ════ QUOTE SECTION ════ */
-.quote-section {
-    padding: clamp(2.5rem, 6vw, 4rem) 0 clamp(3rem, 8vw, 5rem);
-    background: var(--neutral-light);
-}
-.quote-layout {
-    display: grid;
-    grid-template-columns: 1fr 1.6fr;
-    gap: 2.5rem;
-    max-width: 1100px;
-    margin: 0 auto;
-    padding: 0 clamp(1rem, 4vw, 2rem);
-}
-
-/* ── Side info ── */
-.quote-side {
-    background: var(--white);
-    border-radius: 20px;
-    padding: clamp(1.5rem, 4vw, 2.2rem);
-    box-shadow: var(--shadow);
-    height: fit-content;
-}
-.quote-side h2 { color: var(--primary-dark); font-size: clamp(1.2rem, 2.5vw, 1.5rem); margin-bottom: 0.8rem; font-weight: 700; }
-.quote-side p { color: var(--neutral-dark); font-size: .9rem; line-height: 1.7; margin-bottom: 1.2rem; opacity: .85; }
-.benefit-list { list-style: none; margin-bottom: 1.5rem; }
-.benefit-list li {
-    display: flex; align-items: flex-start; gap: 10px;
-    padding: .55rem 0;
-    font-size: .88rem;
-    color: var(--neutral-dark);
-    border-bottom: 1px solid var(--gray);
-}
-.benefit-list li:last-child { border-bottom: none; }
-.benefit-icon { color: var(--primary-light); font-size: 1rem; margin-top: 2px; flex-shrink: 0; }
-.contact-box {
-    background: var(--neutral-light);
-    border-radius: 12px;
-    padding: 1.2rem;
-    border-left: 3px solid var(--primary-light);
-}
-.contact-box h3 { color: var(--primary-dark); font-size: .95rem; margin-bottom: .7rem; }
-.contact-box a {
-    display: block;
-    color: var(--primary-medium);
-    font-size: .85rem;
-    margin-bottom: .35rem;
-    transition: var(--transition);
-}
-.contact-box a:hover { color: var(--primary-dark); padding-left: 4px; }
-
-/* ── Form card ── */
-.quote-form-card {
-    background: var(--white);
-    border-radius: 20px;
-    padding: clamp(1.5rem, 4vw, 2.5rem);
-    box-shadow: var(--shadow);
-}
-.form-card-header { margin-bottom: 1.5rem; padding-bottom: 1.2rem; border-bottom: 1px solid var(--gray); }
-.form-card-header h2 { color: var(--primary-dark); font-size: clamp(1.3rem, 3vw, 1.8rem); margin-bottom: .3rem; font-weight: 700; }
-.form-card-header p { color: var(--neutral-dark); font-size: .88rem; opacity: .8; }
-.quote-form { display: flex; flex-direction: column; gap: 1.2rem; }
-.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
-.form-group { display: flex; flex-direction: column; gap: 6px; }
-.form-group label { color: var(--primary-dark); font-weight: 600; font-size: .88rem; }
-.form-group label .req { color: #dc3545; margin-left: 3px; }
-.form-group input,
-.form-group select,
-.form-group textarea {
-    padding: 11px 14px;
-    border: 2px solid var(--gray);
-    border-radius: 10px;
-    font-size: 0.95rem;
-    font-family: inherit;
-    color: var(--neutral-dark);
-    background: var(--white);
-    transition: var(--transition);
-    width: 100%;
-}
-.form-group input:focus,
-.form-group select:focus,
-.form-group textarea:focus {
-    outline: none;
-    border-color: var(--primary-light);
-    box-shadow: 0 0 0 3px rgba(42,139,124,.12);
-}
-.form-group textarea { resize: vertical; min-height: 110px; }
-.form-group select { cursor: pointer; }
-.checkbox-wrap {
-    display: flex; align-items: flex-start; gap: 10px;
-    font-size: .85rem; color: var(--neutral-dark);
-}
-.checkbox-wrap input { width: 18px; height: 18px; margin-top: 2px; cursor: pointer; accent-color: var(--primary-light); flex-shrink: 0; }
-.checkbox-wrap a { color: var(--primary-light); font-weight: 600; }
-.checkbox-wrap a:hover { text-decoration: underline; }
-.btn-submit-full {
-    width: 100%;
-    padding: 15px;
-    background: linear-gradient(135deg, var(--primary-light), var(--primary-medium));
-    color: var(--white);
-    border: none;
-    border-radius: 50px;
-    font-size: 1.05rem;
+.breviario-title {
+    font-size: 0.72rem;
     font-weight: 700;
-    cursor: pointer;
-    transition: var(--transition);
-    letter-spacing: .04em;
-    font-family: inherit;
-}
-.btn-submit-full:hover { transform: translateY(-3px); box-shadow: 0 15px 30px rgba(10,42,41,.25); }
-.form-feedback {
-    display: none;
-    padding: 12px 16px;
-    border-radius: 10px;
-    font-size: .88rem;
-    font-weight: 500;
-}
-.form-feedback.success { display: block; background: rgba(40,167,69,.1); color: #155724; border: 1px solid rgba(40,167,69,.25); }
-.form-feedback.error   { display: block; background: rgba(220,53,69,.08); color: #721c24; border: 1px solid rgba(220,53,69,.2); }
-
-/* ════ MODAL ════ */
-.terms-modal {
-    display: none;
-    position: fixed; inset: 0;
-    background: rgba(0,0,0,0.55);
-    z-index: 2000;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--primary-medium);
+    margin-bottom: 0.6rem;
+    display: flex;
     align-items: center;
-    justify-content: center;
-    padding: 1rem;
+    gap: 6px;
 }
-.terms-modal.open { display: flex; }
-.terms-box {
-    background: var(--white);
-    border-radius: var(--radius);
-    padding: clamp(1.5rem, 4vw, 2.5rem);
-    max-width: 500px;
-    width: 100%;
+.breviario ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
 }
-.terms-box h3 { color: var(--primary-dark); font-size: 1.2rem; margin-bottom: 1rem; }
-.terms-box p { font-size: .9rem; line-height: 1.7; color: var(--neutral-dark); margin-bottom: 1.5rem; }
-.terms-close {
-    background: var(--primary-light);
-    color: #fff;
-    border: none;
-    padding: 0.6rem 1.8rem;
-    border-radius: 50px;
-    font-size: .9rem;
-    font-weight: 600;
-    cursor: pointer;
-    font-family: inherit;
+.breviario ul li {
+    font-size: 0.83rem;
+    color: var(--neutral-dark);
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    line-height: 1.5;
+}
+/* Tilde verde (✓) como viñeta de cada beneficio */
+.breviario ul li::before {
+    content: '✓';
+    color: var(--primary-light);
+    font-weight: 700;
+    flex-shrink: 0;
+    margin-top: 1px;
+}
+
+/* ── MÉTRICAS ──
+   Fila de 3 cajas oscuras con el número y etiqueta del resultado clave
+   (ej. "92% — Reducción de paros"). Siempre al fondo de la tarjeta. */
+.metrics-row {
+    display: flex;
+    gap: 0.8rem;
+    flex-wrap: wrap;
+    margin-top: auto; /* empuja las métricas al fondo de la tarjeta */
+}
+.metric {
+    flex: 1;
+    min-width: 80px;
+    background: var(--primary-dark);
+    border-radius: 10px;
+    padding: 0.6rem 0.8rem;
+    text-align: center;
+}
+/* Número grande en color dorado */
+.metric strong {
+    display: block;
+    font-size: clamp(1.1rem, 2.5vw, 1.4rem);
+    font-weight: 800;
+    color: var(--secondary);
+    line-height: 1.1;
+}
+/* Etiqueta descriptiva del número (ej. "Reducción de paros") */
+.metric span {
+    font-size: 0.66rem;
+    color: rgba(255,255,255,0.7);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+}
+
+/* ════ CTA BAND ════ */
+.cta-band {
+    background: linear-gradient(135deg, var(--primary-dark), var(--primary-medium));
+    padding: clamp(3rem, 7vw, 5rem) clamp(1rem, 5vw, 2rem);
+    text-align: center;
+    color: var(--white);
+}
+.cta-band h2 {
+    font-size: clamp(1.6rem, 4vw, 2.4rem);
+    font-weight: 800;
+    margin-bottom: 0.8rem;
+    letter-spacing: -0.02em;
+}
+.cta-band p {
+    opacity: 0.85;
+    max-width: 600px;
+    margin: 0 auto 2rem;
+    font-size: 1rem;
+}
+.btn-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--secondary);
+    color: var(--primary-dark);
+    font-weight: 700;
+    font-size: 1rem;
+    padding: 0.9rem 2.2rem;
+    border-radius: 10px;
     transition: var(--transition);
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    font-family: 'Inter', sans-serif;
 }
-.terms-close:hover { background: var(--primary-medium); }
+.btn-primary:hover { transform: translateY(-3px); box-shadow: 0 8px 28px rgba(244,183,64,0.45); filter: brightness(1.05); }
 
 /* ════ FOOTER ════ */
 .footer {
@@ -322,257 +660,532 @@ ul { list-style: none; }
 }
 .footer-grid {
     display: grid;
-    grid-template-columns: 2fr repeat(3, 1fr);
-    gap: 2.5rem;
+    grid-template-columns: 1.6fr repeat(3, 1fr);
+    gap: 2rem;
     margin-bottom: 2.5rem;
 }
-.footer-logo-wrap { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.75rem; }
-.footer-logo-wrap img { height: 38px; width: auto; }
-.footer-brand { font-size: 1rem; font-weight: 700; color: #fff; }
-.footer-tagline { font-size: .85rem; font-style: italic; opacity: .6; margin-bottom: 1rem; }
-.footer-contact-item { font-size: .85rem; margin-bottom: .4rem; }
+.footer-logo-wrap { display: flex; align-items: center; gap: 0.7rem; margin-bottom: 0.7rem; }
+.footer-logo-wrap img { height: 36px; }
+.footer-brand { font-weight: 700; color: #fff; font-size: 1rem; }
+.footer-tagline { font-size: 0.82rem; opacity: 0.6; margin-bottom: 1rem; font-style: italic; }
+.footer-contact-item { font-size: 0.82rem; margin-bottom: 0.4rem; }
 .footer-contact-item a { color: rgba(255,255,255,0.7); transition: var(--transition); }
-.footer-contact-item a:hover { color: #7ee8d4; }
-.footer-col h5 { font-size: .82rem; font-weight: 700; text-transform: uppercase; letter-spacing: .1em; color: #fff; margin-bottom: .9rem; }
-.footer-col ul li { margin-bottom: .45rem; }
-.footer-col ul a { font-size: .82rem; opacity: .65; transition: var(--transition); }
-.footer-col ul a:hover { opacity: 1; color: #7ee8d4; }
+.footer-contact-item a:hover { color: var(--secondary); }
+.footer-col h5 { color: #fff; font-size: 0.85rem; font-weight: 700; margin-bottom: 1rem; text-transform: uppercase; letter-spacing: 0.08em; }
+.footer-col ul li { margin-bottom: 0.5rem; }
+.footer-col ul li a { font-size: 0.82rem; color: rgba(255,255,255,0.6); transition: var(--transition); }
+.footer-col ul li a:hover { color: var(--secondary); }
 .footer-bottom {
-    border-top: 1px solid rgba(255,255,255,0.08);
+    border-top: 1px solid rgba(255,255,255,0.1);
     padding-top: 1.5rem;
     display: flex;
-    flex-wrap: wrap;
     justify-content: space-between;
-    gap: .5rem;
+    flex-wrap: wrap;
+    gap: 0.5rem;
 }
-.footer-copy { font-size: .76rem; opacity: .45; }
+.footer-copy { font-size: 0.78rem; opacity: 0.5; }
 
-/* ── Reveal ── */
-.reveal { opacity: 0; transform: translateY(22px); transition: opacity 0.6s ease, transform 0.6s ease; }
+/* ════ REVEAL ════ */
+.reveal { opacity: 0; transform: translateY(22px); transition: opacity 0.5s ease, transform 0.5s ease; }
 .reveal.active { opacity: 1; transform: none; }
+/* Fallback: si no hay servidor (archivo local) se muestran igual */
+.reveal.ready { opacity: 1; transform: none; }
 
-/* ════════════════════════════════════════
-   RESPONSIVE TABLET (≤ 900px)
-════════════════════════════════════════ */
+/* ════ RESPONSIVE ════ */
 @media (max-width: 900px) {
+    .hamburger { display: flex; }
     .nav-menu {
         display: none;
+        flex-direction: column;
         position: fixed;
         top: 68px; left: 0; right: 0;
-        background: var(--primary-dark);
-        flex-direction: column;
-        align-items: stretch;
-        padding: 1rem;
-        gap: 0.25rem;
+        background: rgba(10,42,41,0.98);
+        padding: 1.2rem 1.5rem 1.5rem;
+        gap: 0.3rem;
         border-top: 1px solid rgba(255,255,255,0.08);
-        max-height: calc(100svh - 68px);
+        max-height: calc(100vh - 68px);
         overflow-y: auto;
-        z-index: 999;
     }
     .nav-menu.active { display: flex; }
-    .nav-menu a { font-size: 1rem; padding: 0.8rem 1rem; border-radius: 8px; }
-    .hamburger { display: flex; }
-
-    .quote-layout {
-        grid-template-columns: 1fr;
-        gap: 1.5rem;
-    }
-    .quote-side { order: 2; }
-    .quote-form-card { order: 1; }
-
-    .info-strip-grid { grid-template-columns: 1fr; max-width: 480px; }
-
+    .nav-menu a { padding: 0.75rem 1rem; border-radius: 8px; width: 100%; font-size: 0.95rem; }
     .footer-grid { grid-template-columns: 1fr 1fr; }
-    .footer-grid > div:first-child { grid-column: 1 / -1; }
 }
-
-/* ════════════════════════════════════════
-   RESPONSIVE MOBILE (≤ 600px)
-════════════════════════════════════════ */
 @media (max-width: 600px) {
-    .logo-container img { height: 32px; }
-    .slogan { display: none; }
-
-    .projects-hero { padding: 6rem 1rem 2.5rem; }
-    .projects-hero h1 { font-size: clamp(1.5rem, 7vw, 2rem); }
-
-    .form-row { grid-template-columns: 1fr; gap: 0; }
-
-    .footer-grid { grid-template-columns: 1fr; gap: 1.5rem; }
-    .footer-bottom { flex-direction: column; }
+    .filter-btn { font-size: 0.78rem; padding: 0.4rem 0.9rem; }
+    .footer-grid { grid-template-columns: 1fr; }
+    .footer-bottom { flex-direction: column; align-items: center; text-align: center; }
+    .metrics-row { gap: 0.5rem; }
 }
 </style>
 </head>
 <body>
 
-<!-- ══ HEADER ═══════════════════════════ -->
+<!-- ════ HEADER ════ -->
 <header class="header">
     <nav class="navbar">
-        <a href="index.html" class="logo-container">
+        <a href="index.html" class="logo-container" aria-label="VEF Automatización — Inicio">
             <img src="assets/VEF.png" alt="VEF Automatización">
-            <span class="slogan">Engineering the Future</span>
+            <div>
+                <div class="logo-text">VEF Automatización</div>
+                <div class="slogan">Control Preciso · Resultados Medibles</div>
+            </div>
         </a>
-        <ul class="nav-menu" id="navMenu">
-            <li><a href="index.html">Inicio</a></li>
-            <li><a href="index.html#mision">Misión y Valores</a></li>
-            <li><a href="index.html#servicios">Servicios</a></li>
-            <li><a href="index.html#legacy">Sistemas Legacy</a></li>
-            <li><a href="socios.html">Socios Comerciales</a></li>
-            <li><a href="index.html#contacto">Contacto</a></li>
-        </ul>
-        <button class="hamburger" id="hamburger" aria-label="Menú">
+
+        <button class="hamburger" id="hamburger" aria-label="Menú" aria-expanded="false">
             <span class="bar"></span>
             <span class="bar"></span>
             <span class="bar"></span>
         </button>
+
+        <ul class="nav-menu" id="navMenu">
+            <li><a href="index.html">Inicio</a></li>
+            <li><a href="index.html#servicios">Servicios</a></li>
+            <li><a href="proyectos.html" class="active">Proyectos</a></li>
+            <li><a href="socios.html">Socios</a></li>
+            <li><a href="http://5.189.189.101" target="_blank">ERP VEF</a></li>
+            <li><a href="cotizacion.html" class="nav-cta">Cotizar →</a></li>
+        </ul>
     </nav>
 </header>
 
-<!-- ══ HERO ═══════════════════════════════ -->
+<!-- ════ HERO ════ -->
 <section class="projects-hero">
-    <h1>Solicita tu Cotización</h1>
-    <p>Cuéntanos sobre tu proyecto y en menos de 24 horas recibirás una propuesta técnica personalizada sin costo.</p>
-</section>
-
-<!-- ══ INFO STRIP ════════════════════════ -->
-<div class="info-strip">
-    <div class="info-strip-grid">
-        <div class="info-chip">
-            <span class="info-chip-icon">⚡</span>
-            <div class="info-chip-text">
-                <strong>Respuesta en &lt; 24 hrs</strong>
-                <span>Propuesta técnica personalizada</span>
-            </div>
+    <div class="hero-badge">⚙️ Portafolio de Proyectos</div>
+    <h1>Resultados que Hablan<br>por Sí Solos</h1>
+    <p>Cada proyecto es una historia de transformación industrial. Compara el antes y el después, y conoce el impacto real que logramos para nuestros clientes.</p>
+    <div class="hero-stats">
+        <div class="hero-stat">
+            <strong>30+</strong>
+            <span>Proyectos entregados</span>
         </div>
-        <div class="info-chip">
-            <span class="info-chip-icon">🔒</span>
-            <div class="info-chip-text">
-                <strong>100% Confidencial</strong>
-                <span>Tus datos están protegidos</span>
-            </div>
+        <div class="hero-stat">
+            <strong>100%</strong>
+            <span>Satisfacción del cliente</span>
         </div>
-        <div class="info-chip">
-            <span class="info-chip-icon">🎯</span>
-            <div class="info-chip-text">
-                <strong>Cotización Gratuita</strong>
-                <span>Sin compromisos ni cargos</span>
-            </div>
+        <div class="hero-stat">
+            <strong>6</strong>
+            <span>Sectores atendidos</span>
         </div>
-    </div>
-</div>
-
-<!-- ══ COTIZACIÓN ════════════════════════ -->
-<section class="quote-section">
-    <div class="quote-layout">
-        <!-- Columna izquierda -->
-        <div class="quote-side reveal">
-            <h2>¿Por qué elegir VEF?</h2>
-            <p>Somos especialistas en automatización industrial con dominio técnico multi-plataforma y experiencia probada en sistemas legacy.</p>
-            <ul class="benefit-list">
-                <li><span class="benefit-icon">✓</span> Respuesta técnica en menos de 24 horas</li>
-                <li><span class="benefit-icon">✓</span> Ingeniero asignado a tu proyecto</li>
-                <li><span class="benefit-icon">✓</span> Multi-plataforma: Siemens, Rockwell, Bosch, CODESYS</li>
-                <li><span class="benefit-icon">✓</span> Documentación técnica completa incluida</li>
-                <li><span class="benefit-icon">✓</span> Soporte post-implementación garantizado</li>
-                <li><span class="benefit-icon">✓</span> Estudio de ROI detallado incluido</li>
-            </ul>
-            <div class="contact-box">
-                <h3>📞 Atención Inmediata</h3>
-                <a href="https://wa.me/527221157792">📱 +52 (722) 1157792 WhatsApp</a>
-                <a href="mailto:contacto@vefautomatizacion.com">✉ contacto@vefautomatizacion.com</a>
-                <a href="mailto:soporte@vefautomatizacion.com">✉ soporte@vefautomatizacion.com</a>
-            </div>
-        </div>
-
-        <!-- Columna derecha: formulario -->
-        <div class="quote-form-card reveal">
-            <div class="form-card-header">
-                <h2>Formulario de Cotización</h2>
-                <p>Completa todos los campos para recibir una propuesta a la medida de tus necesidades.</p>
-            </div>
-
-            <form class="quote-form" id="quoteForm" novalidate>
-                <div class="form-row">
-                    <div class="form-group">
-                        <label>Nombre completo <span class="req">*</span></label>
-                        <input type="text" id="nombre" placeholder="Ing. Juan García" required>
-                    </div>
-                    <div class="form-group">
-                        <label>Empresa <span class="req">*</span></label>
-                        <input type="text" id="empresa" placeholder="Industrias Ejemplo S.A." required>
-                    </div>
-                </div>
-
-                <div class="form-row">
-                    <div class="form-group">
-                        <label>Correo electrónico <span class="req">*</span></label>
-                        <input type="email" id="email" placeholder="tu@empresa.com" required>
-                    </div>
-                    <div class="form-group">
-                        <label>Teléfono / WhatsApp</label>
-                        <input type="tel" id="telefono" placeholder="+52 722 123 4567">
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label>Software / Plataforma que utilizas <span class="req">*</span></label>
-                    <input type="text" id="software" placeholder="Ej: Siemens TIA Portal, CODESYS, Rockwell Studio 5000..." required>
-                </div>
-
-                <div class="form-group">
-                    <label>Tipo de servicio requerido <span class="req">*</span></label>
-                    <select id="servicio" required>
-                        <option value="">— Selecciona una opción —</option>
-                        <option>Consultoría en Automatización Industrial</option>
-                        <option>Construcción de Tableros Eléctricos</option>
-                        <option>Integración de Sistemas PLC/SCADA/HMI</option>
-                        <option>Capacitación Técnica Especializada</option>
-                        <option>Mantenimiento Predictivo Digital</option>
-                        <option>Sistemas Legacy / Equipos Obsoletos</option>
-                        <option>Otro / Proyecto integral</option>
-                    </select>
-                </div>
-
-                <div class="form-group">
-                    <label>Plazo estimado de implementación</label>
-                    <select id="plazo">
-                        <option value="">— Selecciona un plazo —</option>
-                        <option>Urgente — menos de 1 mes</option>
-                        <option>Corto plazo — 1 a 3 meses</option>
-                        <option>Mediano plazo — 3 a 6 meses</option>
-                        <option>Largo plazo — más de 6 meses</option>
-                    </select>
-                </div>
-
-                <div class="form-group">
-                    <label>Describe el alcance de tu proyecto <span class="req">*</span></label>
-                    <textarea id="alcance" placeholder="Detalla los requerimientos: tipo de automatización, módulos de medición, protocolos de comunicación, equipos involucrados, entregables esperados..." required></textarea>
-                </div>
-
-                <div class="checkbox-wrap">
-                    <input type="checkbox" id="terminos" required>
-                    <label for="terminos">
-                        Acepto los <a href="#" id="openTerms">términos y condiciones</a> de VEF Automatización y autorizo el uso de mis datos para fines comerciales.
-                    </label>
-                </div>
-
-                <button type="submit" class="btn-submit-full">Enviar Solicitud →</button>
-                <div class="form-feedback" id="formFeedback"></div>
-            </form>
+        <div class="hero-stat">
+            <strong>8+</strong>
+            <span>Años de experiencia</span>
         </div>
     </div>
 </section>
 
-<!-- MODAL TÉRMINOS -->
-<div class="terms-modal" id="termsModal">
-    <div class="terms-box">
-        <h3>Términos y Condiciones</h3>
-        <p>Al enviar este formulario, autorizas a VEF Automatización a contactarte para dar seguimiento a tu solicitud. Tus datos serán tratados con confidencialidad y únicamente con fines comerciales relacionados con tu proyecto de automatización industrial. No compartimos tu información con terceros.</p>
-        <button class="terms-close" id="closeTerms">Entendido</button>
+<!-- ════ FILTROS ════ -->
+<div class="filter-section">
+    <div class="filter-bar" id="filterBar">
+        <button class="filter-btn active" data-filter="all">Todos los proyectos</button>
+        <button class="filter-btn" data-filter="tableros">Tableros Eléctricos</button>
+        <button class="filter-btn" data-filter="plc">PLC / HMI</button>
+        <button class="filter-btn" data-filter="scada">SCADA</button>
+        <button class="filter-btn" data-filter="legacy">Sistemas Legacy</button>
+        <button class="filter-btn" data-filter="mantenimiento">Mantenimiento</button>
     </div>
 </div>
 
-<!-- FOOTER -->
+<!-- ════ PROYECTOS ════ -->
+<section class="projects-section" id="proyectos">
+    <div class="container">
+        <div class="section-header reveal">
+            <h2>Proyectos Realizados</h2>
+            <p>Desliza el comparador ◀▶ para ver la transformación antes y después en cada proyecto</p>
+        </div>
+
+        <div class="projects-grid" id="projectsGrid">
+
+            <!-- ── PROYECTO 1 ── -->
+            <article class="project-card reveal" data-category="PLC Obsoleto y Fallas Eléctricas">
+                <!-- Comparador antes/después -->
+                <div class="compare-wrapper" data-compare>
+                    <!-- ANTES (fondo, visible a la derecha) -->
+                    <!-- Reemplaza src con la ruta real: antes="assets/proyectos/p1-antes.jpg" -->
+                    <img class="compare-img compare-before"
+                         src="images/Foto1.jpeg"
+                         alt="Tablero eléctrico antes de la modernización"
+                         onerror="this.parentElement.innerHTML=placeholderHTML('Tablero Desactualizado')">
+                    <!-- DESPUÉS (encima, clippeado) -->
+                    <img class="compare-img compare-after"
+                         src="images/foto3.jpeg"
+                         alt="Tablero eléctrico modernizado"
+                         onerror="handleImgError(this)">
+                    <div class="compare-divider"></div>
+                    <div class="compare-handle">◀▶</div>
+                    <span class="label-despues">DESPUÉS</span>
+                    <span class="label-antes">ANTES</span>
+                </div>
+                <div class="compare-hint">◀ Desliza para comparar ▶</div>
+
+                <!-- Fotos adicionales del proyecto (hasta 2). Elimina las que no uses. -->
+                <div class="extra-photos">
+                    <img class="extra-photo" src="images/Foto_Et200Desp.jpeg" alt="Vista interior del tablero modernizado" onerror="this.style.display='none'">
+                    <img class="extra-photo" src="images/et200_antes.jpeg" alt="Detalle del PLC S7-1500 instalado" onerror="this.style.display='none'">
+                </div>
+
+                <div class="card-body">
+                    <div class="card-tags">
+                        <span class="tag highlight">Tableros Eléctricos PLC</span>
+                        <span class="tag">Grupo Fugra</span>
+                        <span class="tag">Lerma, Mx</span>
+                    </div>
+                    <h3 class="card-title">Upgrade de PLC S7 300 a PLC 1500 — </h3>
+                    <p class="card-subtitle">📍 Planta Frugra · 2026</p>
+                    <p class="card-desc">
+                        La planta operaba con un tablero de más de 30 años, con cableado sin identificar, daño en esclavo profibus
+                        y paros no programados constantes. Se rediseñó completamente el tablero bajo norma NOM
+                        , PLC Siemens S7-1500 y documentación as-built.
+                    </p>
+
+                    <div class="breviario">
+                        <div class="breviario-title">⚡ Cómo ayudamos al cliente</div>
+                        <ul>
+                            <li>Reabilitamos la maquina para seguri con su operación</li>
+                            <li>Redujimos el tiempo de diagnóstico de fallas de 4 h a menos de 20 min</li>
+                            <li>Entregamos planos eléctricos actualizados y etiquetado total del tablero</li>
+                            <li>Capacitamos al personal de mantenimiento en el nuevo sistema</li>
+                        </ul>
+                    </div>
+
+                    <div class="metrics-row">
+                        <div class="metric">
+                            <strong>92%</strong>
+                            <span>Reducción de paros</span>
+                        </div>
+                        <div class="metric">
+                            <strong>3 sem</strong>
+                            <span>Tiempo de entrega</span>
+                        </div>
+                        <div class="metric">
+                            <strong>NOM</strong>
+                            <span>Certificación lograda</span>
+                        </div>
+                    </div>
+                </div>
+            </article>
+
+            <!-- ── PROYECTO 2 ── -->
+            <article class="project-card reveal" data-category="plc">
+                <div class="compare-wrapper" data-compare>
+                    <img class="compare-img compare-before"
+                         src="images/Fotos%202.jpeg"
+                         alt="Panel HMI obsoleto antes"
+                         onerror="this.parentElement.innerHTML=placeholderHTML('HMI Obsoleto')">
+                    <img class="compare-img compare-after"
+                         src="images/VEF_.jpeg"
+                         alt="Pantalla HMI moderna"
+                         onerror="handleImgError(this)">
+                    <div class="compare-divider"></div>
+                    <div class="compare-handle">◀▶</div>
+                    <span class="label-despues">DESPUÉS</span>
+                    <span class="label-antes">ANTES</span>
+                </div>
+                <div class="compare-hint">◀ Desliza para comparar ▶</div>
+
+                <div class="extra-photos">
+                    <img class="extra-photo" src="images/foto_extra_p2a.jpg" alt="Pantalla HMI en operación" onerror="this.style.display='none'">
+                    <img class="extra-photo" src="images/foto_extra_p2b.jpg" alt="Detalle del rack S7-1500" onerror="this.style.display='none'">
+                </div>
+
+                <div class="card-body">
+                    <div class="card-tags">
+                        <span class="tag highlight">PLC / HMI</span>
+                        <span class="tag">Manufactura</span>
+                        <span class="tag">Estado de México</span>
+                    </div>
+                    <h3 class="card-title">Migración PLC Allen-Bradley → Siemens S7-1500 con HMI SIMATIC</h3>
+                    <p class="card-subtitle">🏭 Planta de Manufactura Metalmecánica · 2024</p>
+                    <p class="card-desc">
+                        El cliente contaba con un PLC SLC-500 sin soporte del fabricante y sin posibilidad de obtener refacciones. Se migró toda la lógica a Siemens TIA Portal con un S7-1500, se instaló una pantalla SIMATIC TP700 y se integró comunicación Profinet con los variadores existentes.
+                    </p>
+
+                    <div class="breviario">
+                        <div class="breviario-title">🔄 Cómo ayudamos al cliente</div>
+                        <ul>
+                            <li>Eliminamos la dependencia de un sistema sin soporte y sin refacciones disponibles</li>
+                            <li>Migramos 100% de la lógica sin modificar la secuencia de producción</li>
+                            <li>El operario ahora visualiza alarmas, tiempos de ciclo y producción en tiempo real</li>
+                            <li>Integración con variadores vía Profinet: sin cableado adicional</li>
+                        </ul>
+                    </div>
+
+                    <div class="metrics-row">
+                        <div class="metric">
+                            <strong>0</strong>
+                            <span>Paros por obsolescencia</span>
+                        </div>
+                        <div class="metric">
+                            <strong>+18%</strong>
+                            <span>OEE mejorado</span>
+                        </div>
+                        <div class="metric">
+                            <strong>4 sem</strong>
+                            <span>Migración completa</span>
+                        </div>
+                    </div>
+                </div>
+            </article>
+
+            <!-- ── PROYECTO 3 ── -->
+            <article class="project-card reveal" data-category="scada">
+                <div class="compare-wrapper" data-compare>
+                    <img class="compare-img compare-before"
+                         src="images/WhatsApp%20Image%202026-04-05%20at%2012.10.00%20PM.jpeg"
+                         alt="Control manual sin SCADA"
+                         onerror="this.parentElement.innerHTML=placeholderHTML('Control Manual')">
+                    <img class="compare-img compare-after"
+                         src="images/WhatsApp%20Image%202026-04-05%20at%2012.10.00%20PM%20(1).jpeg"
+                         alt="Sistema SCADA implementado"
+                         onerror="handleImgError(this)">
+                    <div class="compare-divider"></div>
+                    <div class="compare-handle">◀▶</div>
+                    <span class="label-despues">DESPUÉS</span>
+                    <span class="label-antes">ANTES</span>
+                </div>
+                <div class="compare-hint">◀ Desliza para comparar ▶</div>
+
+                <div class="extra-photos">
+                    <img class="extra-photo" src="images/foto_extra_p3a.jpg" alt="Dashboard SCADA con variables de proceso" onerror="this.style.display='none'">
+                    <img class="extra-photo" src="images/foto_extra_p3b.jpg" alt="Instrumentación en planta de agua" onerror="this.style.display='none'">
+                </div>
+
+                <div class="card-body">
+                    <div class="card-tags">
+                        <span class="tag highlight">SCADA</span>
+                        <span class="tag">Agua y Tratamiento</span>
+                        <span class="tag">Toluca, Mx</span>
+                    </div>
+                    <h3 class="card-title">Implementación SCADA para Planta de Tratamiento de Agua</h3>
+                    <p class="card-subtitle">💧 Municipio de la Región · 2023</p>
+                    <p class="card-desc">
+                        La planta operaba con registros manuales en papel y sin monitoreo remoto. Implementamos un sistema SCADA con WinCC, comunicación OPC-UA a los PLCs existentes, dashboards de variables críticas (pH, caudal, nivel, cloro) y alertas automáticas por correo y WhatsApp.
+                    </p>
+
+                    <div class="breviario">
+                        <div class="breviario-title">💧 Cómo ayudamos al cliente</div>
+                        <ul>
+                            <li>Pasaron de registros en papel a históricos digitales con trazabilidad total</li>
+                            <li>El operador recibe alertas en tiempo real ante desviaciones de proceso</li>
+                            <li>Reducción del 40% en consumo de reactivos gracias a dosificación automática</li>
+                            <li>Cumplimiento de reportes regulatorios de forma automática</li>
+                        </ul>
+                    </div>
+
+                    <div class="metrics-row">
+                        <div class="metric">
+                            <strong>-40%</strong>
+                            <span>Consumo de reactivos</span>
+                        </div>
+                        <div class="metric">
+                            <strong>24/7</strong>
+                            <span>Monitoreo remoto</span>
+                        </div>
+                        <div class="metric">
+                            <strong>100%</strong>
+                            <span>Trazabilidad digital</span>
+                        </div>
+                    </div>
+                </div>
+            </article>
+
+            <!-- ── PROYECTO 4 ── -->
+            <article class="project-card reveal" data-category="legacy">
+                <div class="compare-wrapper" data-compare>
+                    <img class="compare-img compare-before"
+                         src="images/1200px-BMW_Leipzig_MEDIA_050719_Download_Karosseriebau_max-1024x684.jpg"
+                         alt="Sistema legacy con PLC obsoleto"
+                         onerror="this.parentElement.innerHTML=placeholderHTML('PLC Obsoleto S5')">
+                    <img class="compare-img compare-after"
+                         src="images/foto3.jpeg"
+                         alt="Sistema legacy migrado y modernizado"
+                         onerror="handleImgError(this)">
+                    <div class="compare-divider"></div>
+                    <div class="compare-handle">◀▶</div>
+                    <span class="label-despues">DESPUÉS</span>
+                    <span class="label-antes">ANTES</span>
+                </div>
+                <div class="compare-hint">◀ Desliza para comparar ▶</div>
+
+                <div class="extra-photos">
+                    <img class="extra-photo" src="images/foto_extra_p4a.jpg" alt="PLC Siemens S5 original extraído" onerror="this.style.display='none'">
+                    <img class="extra-photo" src="images/foto_extra_p4b.jpg" alt="Nuevo S7-1200 instalado y en marcha" onerror="this.style.display='none'">
+                </div>
+
+                <div class="card-body">
+                    <div class="card-tags">
+                        <span class="tag highlight">Sistemas Legacy</span>
+                        <span class="tag">Industria Química</span>
+                        <span class="tag">CDMX</span>
+                    </div>
+                    <h3 class="card-title">Rescate y Documentación de Sistema Legacy — Siemens S5</h3>
+                    <p class="card-subtitle">🧪 Planta Química · 2023</p>
+                    <p class="card-desc">
+                        El cliente tenía un Siemens S5-115U sin documentación, sin respaldo del programa y con riesgo de paro total. Extrajimos el programa mediante ingeniería inversa, lo documentamos completamente y migramos a S7-1200 con emulación total de la secuencia original.
+                    </p>
+
+                    <div class="breviario">
+                        <div class="breviario-title">🛡️ Cómo ayudamos al cliente</div>
+                        <ul>
+                            <li>Rescatamos el programa de un sistema sin documentación ni respaldos</li>
+                            <li>Entregamos documentación técnica completa por primera vez en 20 años</li>
+                            <li>La planta dejó de depender de un solo técnico que conocía el sistema</li>
+                            <li>Migración sin modificar ni una línea del proceso productivo</li>
+                        </ul>
+                    </div>
+
+                    <div class="metrics-row">
+                        <div class="metric">
+                            <strong>100%</strong>
+                            <span>Lógica documentada</span>
+                        </div>
+                        <div class="metric">
+                            <strong>0</strong>
+                            <span>Pérdida de proceso</span>
+                        </div>
+                        <div class="metric">
+                            <strong>20 años</strong>
+                            <span>De operación asegurada</span>
+                        </div>
+                    </div>
+                </div>
+            </article>
+
+            <!-- ── PROYECTO 5 ── -->
+            <article class="project-card reveal" data-category="mantenimiento">
+                <div class="compare-wrapper" data-compare>
+                    <img class="compare-img compare-before"
+                         src="assets/proyectos/p5-antes.jpg"
+                         alt="Motor sin instrumentación predictiva"
+                         onerror="this.parentElement.innerHTML=placeholderHTML('Sin Monitoreo')">
+                    <img class="compare-img compare-after"
+                         src="assets/proyectos/p5-despues.jpg"
+                         alt="Sistema de mantenimiento predictivo instalado"
+                         onerror="handleImgError(this)">
+                    <div class="compare-divider"></div>
+                    <div class="compare-handle">◀▶</div>
+                    <span class="label-despues">DESPUÉS</span>
+                    <span class="label-antes">ANTES</span>
+                </div>
+                <div class="compare-hint">◀ Desliza para comparar ▶</div>
+
+                <div class="extra-photos">
+                    <img class="extra-photo" src="assets/proyectos/p5-extra1.jpg" alt="Sensor IoT de vibración instalado" onerror="this.style.display='none'">
+                    <img class="extra-photo" src="assets/proyectos/p5-extra2.jpg" alt="Dashboard de mantenimiento predictivo" onerror="this.style.display='none'">
+                </div>
+
+                <div class="card-body">
+                    <div class="card-tags">
+                        <span class="tag highlight">Mantenimiento Predictivo</span>
+                        <span class="tag">Automotriz</span>
+                        <span class="tag">Lerma, Mx</span>
+                    </div>
+                    <h3 class="card-title">Sistema de Mantenimiento Predictivo Digital — Línea de Estampado</h3>
+                    <p class="card-subtitle">🚗 Tier 1 Sector Automotriz · 2025</p>
+                    <p class="card-desc">
+                        La línea de estampado sufría fallas imprevistas en motores y rodamientos que generaban paros de 6-8 horas. Instalamos sensores IoT de vibración, temperatura y corriente, integrando los datos a un dashboard Industria 4.0 con alertas de mantenimiento preventivo.
+                    </p>
+
+                    <div class="breviario">
+                        <div class="breviario-title">📈 Cómo ayudamos al cliente</div>
+                        <ul>
+                            <li>Pasamos de mantenimiento correctivo a predictivo: las fallas se detectan días antes</li>
+                            <li>Reducción de paros no programados del 78% en el primer trimestre</li>
+                            <li>Dashboard con KPIs de disponibilidad, MTBF y MTTR en tiempo real</li>
+                            <li>ROI alcanzado en menos de 8 meses de operación</li>
+                        </ul>
+                    </div>
+
+                    <div class="metrics-row">
+                        <div class="metric">
+                            <strong>-78%</strong>
+                            <span>Paros correctivos</span>
+                        </div>
+                        <div class="metric">
+                            <strong>8 meses</strong>
+                            <span>Retorno de inversión</span>
+                        </div>
+                        <div class="metric">
+                            <strong>IoT</strong>
+                            <span>Industria 4.0</span>
+                        </div>
+                    </div>
+                </div>
+            </article>
+
+            <!-- ── PROYECTO 6 ── -->
+            <article class="project-card reveal" data-category="tableros plc">
+                <div class="compare-wrapper" data-compare>
+                    <img class="compare-img compare-before"
+                         src="assets/proyectos/p6-antes.jpg"
+                         alt="Tablero de variadores sin integración"
+                         onerror="this.parentElement.innerHTML=placeholderHTML('Variadores Aislados')">
+                    <img class="compare-img compare-after"
+                         src="assets/proyectos/p6-despues.jpg"
+                         alt="Red de variadores integrada a PLC"
+                         onerror="handleImgError(this)">
+                    <div class="compare-divider"></div>
+                    <div class="compare-handle">◀▶</div>
+                    <span class="label-despues">DESPUÉS</span>
+                    <span class="label-antes">ANTES</span>
+                </div>
+                <div class="compare-hint">◀ Desliza para comparar ▶</div>
+
+                <div class="extra-photos">
+                    <img class="extra-photo" src="assets/proyectos/p6-extra1.jpg" alt="Red Profibus DP cableada" onerror="this.style.display='none'">
+                    <img class="extra-photo" src="assets/proyectos/p6-extra2.jpg" alt="Variadores de frecuencia integrados" onerror="this.style.display='none'">
+                </div>
+
+                <div class="card-body">
+                    <div class="card-tags">
+                        <span class="tag highlight">Tableros Eléctricos</span>
+                        <span class="tag highlight">PLC</span>
+                        <span class="tag">Logística</span>
+                    </div>
+                    <h3 class="card-title">Integración de Red de Variadores de Frecuencia vía Profibus</h3>
+                    <p class="card-subtitle">📦 Centro de Distribución · 2025</p>
+                    <p class="card-desc">
+                        12 variadores de frecuencia operaban de forma independiente y manual. Diseñamos e instalamos un tablero maestro con PLC S7-300, red Profibus DP hacia todos los variadores y receta automática de velocidades según el producto en línea.
+                    </p>
+
+                    <div class="breviario">
+                        <div class="breviario-title">🔗 Cómo ayudamos al cliente</div>
+                        <ul>
+                            <li>Eliminamos ajustes manuales en 12 variadores: ahora todo es automático</li>
+                            <li>El cambio de receta (producto) bajó de 45 min a menos de 2 minutos</li>
+                            <li>Ahorro energético del 22% gracias a velocidades optimizadas por receta</li>
+                            <li>Diagnóstico remoto de cada variador desde la sala de control</li>
+                        </ul>
+                    </div>
+
+                    <div class="metrics-row">
+                        <div class="metric">
+                            <strong>-22%</strong>
+                            <span>Consumo eléctrico</span>
+                        </div>
+                        <div class="metric">
+                            <strong>2 min</strong>
+                            <span>Cambio de receta</span>
+                        </div>
+                        <div class="metric">
+                            <strong>12</strong>
+                            <span>Variadores integrados</span>
+                        </div>
+                    </div>
+                </div>
+            </article>
+
+        </div><!-- /projects-grid -->
+    </div>
+</section>
+
+<!-- ════ CTA ════ -->
+<section class="cta-band reveal">
+    <h2>¿Tu Planta Puede Ser el Siguiente Caso de Éxito?</h2>
+    <p>Cuéntanos tu reto. En 24 horas te enviamos una propuesta técnica preliminar sin costo.</p>
+    <a href="cotizacion.html" class="btn-primary">Solicitar Cotización Gratis →</a>
+</section>
+
+<!-- ════ FOOTER ════ -->
 <footer class="footer">
     <div class="container">
         <div class="footer-grid">
@@ -582,17 +1195,16 @@ ul { list-style: none; }
                     <span class="footer-brand">VEF Automatización</span>
                 </div>
                 <p class="footer-tagline">"Control Preciso. Resultados Medibles."</p>
-                <p class="footer-contact-item">✉ <a href="mailto:contacto@vefautomatizacion.com">contacto@vefautomatizacion.com</a></p>
-                <p class="footer-contact-item">✉ <a href="mailto:soporte@vefautomatizacion.com">soporte@vefautomatizacion.com</a></p>
+                <p class="footer-contact-item">✉ <a href="/cdn-cgi/l/email-protection#e1828e8f958082958ea19784878094958e8c8095889b8082888e8fcf828e8c"><span class="__cf_email__" data-cfemail="27444849534644534867514241465253484a46534e5d46444e48490944484a">[email&#160;protected]</span></a></p>
                 <p class="footer-contact-item">📱 <a href="https://wa.me/527221157792">+52 (722) 1157792 WhatsApp</a></p>
             </div>
             <div class="footer-col">
                 <h5>Navegación</h5>
                 <ul>
                     <li><a href="index.html">Inicio</a></li>
-                    <li><a href="index.html#mision">Misión &amp; Visión</a></li>
                     <li><a href="index.html#servicios">Servicios</a></li>
-                    <li><a href="index.html#legacy">Sistemas Legacy</a></li>
+                    <li><a href="proyectos.html">Proyectos</a></li>
+                    <li><a href="socios.html">Socios</a></li>
                 </ul>
             </div>
             <div class="footer-col">
@@ -600,7 +1212,7 @@ ul { list-style: none; }
                 <ul>
                     <li><a href="index.html#servicios">Consultoría PLC</a></li>
                     <li><a href="index.html#servicios">Tableros Eléctricos</a></li>
-                    <li><a href="index.html#servicios">Integración SCADA</a></li>
+                    <li><a href="index.html#servicios">SCADA / HMI</a></li>
                     <li><a href="index.html#legacy">Sistemas Legacy</a></li>
                 </ul>
             </div>
@@ -610,18 +1222,45 @@ ul { list-style: none; }
                     <li><a href="socios.html">Socios Comerciales</a></li>
                     <li><a href="#">LinkedIn</a></li>
                     <li><a href="#">Aviso de Privacidad</a></li>
-                    <li><a href="#">Términos y Condiciones</a></li>
+                    <li><a href="cotizacion.html">Cotizar Proyecto</a></li>
                 </ul>
             </div>
         </div>
         <div class="footer-bottom">
-            <span class="footer-copy">&copy; 2026 VEF Automatización. Todos los derechos reservados.</span>
+            <span class="footer-copy">© 2026 VEF Automatización. Todos los derechos reservados.</span>
             <span class="footer-copy">Especialistas en PLC · CODESYS · Industria 4.0 · Toluca, México</span>
         </div>
     </div>
 </footer>
 
-<script>
+<!-- ── LIGHTBOX ── -->
+<div id="lightbox" role="dialog" aria-modal="true" aria-label="Ver foto completa">
+    <button id="lightbox-close" aria-label="Cerrar">&#x2715;</button>
+    <img id="lightbox-img" src="" alt="">
+    <span id="lightbox-label"></span>
+</div>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+/* ══════════════════════════
+   VEF PROYECTOS — main script
+══════════════════════════ */
+
+/* ── Placeholder cuando no hay imagen ── */
+function placeholderHTML(label) {
+    return `<div class="compare-placeholder">
+        <span class="ph-icon">📷</span>
+        <span>${label}</span>
+        <small style="font-size:.7rem;opacity:.5">Agrega la foto en assets/proyectos/</small>
+    </div>`;
+}
+function handleImgError(img) {
+    // Si falla la imagen DESPUÉS, oculta el comparador y muestra placeholder
+    const wrapper = img.closest('.compare-wrapper');
+    if (wrapper) {
+        wrapper.innerHTML = placeholderHTML('Foto del proyecto');
+    }
+}
+
 /* ── Hamburger ── */
 const hamburger = document.getElementById('hamburger');
 const navMenu   = document.getElementById('navMenu');
@@ -629,67 +1268,148 @@ if (hamburger && navMenu) {
     hamburger.addEventListener('click', () => {
         navMenu.classList.toggle('active');
         hamburger.classList.toggle('active');
+        hamburger.setAttribute('aria-expanded', navMenu.classList.contains('active') ? 'true' : 'false');
     });
     navMenu.querySelectorAll('a').forEach(link => {
         link.addEventListener('click', () => {
             navMenu.classList.remove('active');
             hamburger.classList.remove('active');
+            hamburger.setAttribute('aria-expanded', 'false');
         });
+    });
+    document.addEventListener('click', (e) => {
+        if (!navMenu.contains(e.target) && !hamburger.contains(e.target)) {
+            navMenu.classList.remove('active');
+            hamburger.classList.remove('active');
+        }
     });
 }
 
-/* ── Reveal ── */
+/* ── Reveal on scroll ── */
 const revealEls = document.querySelectorAll('.reveal');
-if ('IntersectionObserver' in window) {
+// Si es archivo local (file://) activar todo de inmediato
+if (window.location.protocol === 'file:') {
+    revealEls.forEach(el => el.classList.add('active'));
+} else if ('IntersectionObserver' in window) {
     const io = new IntersectionObserver(entries => {
-        entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('active'); io.unobserve(e.target); } });
-    }, { threshold: 0.08 });
+        entries.forEach(e => {
+            if (e.isIntersecting) { e.target.classList.add('active'); io.unobserve(e.target); }
+        });
+    }, { threshold: 0.07, rootMargin: '0px 0px -20px 0px' });
     revealEls.forEach(el => io.observe(el));
 } else {
     revealEls.forEach(el => el.classList.add('active'));
 }
 
-/* ── Modal términos ── */
-document.getElementById('openTerms').addEventListener('click', e => {
-    e.preventDefault();
-    document.getElementById('termsModal').classList.add('open');
-});
-document.getElementById('closeTerms').addEventListener('click', () => {
-    document.getElementById('termsModal').classList.remove('open');
-});
-document.getElementById('termsModal').addEventListener('click', e => {
-    if (e.target === e.currentTarget) e.currentTarget.classList.remove('open');
+/* ── Filtros ── */
+document.querySelectorAll('.filter-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        const filter = btn.dataset.filter;
+        document.querySelectorAll('.project-card').forEach(card => {
+            const cat = card.dataset.category || '';
+            if (filter === 'all' || cat.includes(filter)) {
+                card.style.display = '';
+                card.style.opacity = '1';
+            } else {
+                card.style.display = 'none';
+            }
+        });
+    });
 });
 
-/* ── Formulario ── */
-document.getElementById('quoteForm').addEventListener('submit', function(e) {
-    e.preventDefault();
-    const fb      = document.getElementById('formFeedback');
-    const nombre  = document.getElementById('nombre').value.trim();
-    const empresa = document.getElementById('empresa').value.trim();
-    const email   = document.getElementById('email').value.trim();
-    const software= document.getElementById('software').value.trim();
-    const servicio= document.getElementById('servicio').value;
-    const alcance = document.getElementById('alcance').value.trim();
-    const terminos= document.getElementById('terminos').checked;
+/* ══════════════════════════════════════
+   COMPARADOR ANTES / DESPUÉS
+══════════════════════════════════════ */
+document.querySelectorAll('[data-compare]').forEach(wrapper => {
+    const beforeImg = wrapper.querySelector('.compare-before');
+    const afterImg  = wrapper.querySelector('.compare-after');
+    const divider   = wrapper.querySelector('.compare-divider');
+    const handle    = wrapper.querySelector('.compare-handle');
+    if (!afterImg || !divider || !handle) return;
 
-    if (!nombre || !empresa || !email || !software || !servicio || !alcance) {
-        fb.className = 'form-feedback error';
-        fb.textContent = 'Por favor completa todos los campos requeridos (*).';
-        fb.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-        return;
+    let dragging = false;
+
+    function setPosition(clientX) {
+        const rect = wrapper.getBoundingClientRect();
+        let pct = (clientX - rect.left) / rect.width;
+        pct = Math.min(Math.max(pct, 0.02), 0.98);
+        const pctPx = (pct * 100).toFixed(2) + '%';
+        afterImg.style.clipPath  = `inset(0 ${(100 - pct * 100).toFixed(2)}% 0 0)`;
+        divider.style.left  = pctPx;
+        handle.style.left   = pctPx;
     }
-    if (!terminos) {
-        fb.className = 'form-feedback error';
-        fb.textContent = 'Debes aceptar los términos y condiciones.';
-        return;
-    }
-    // Simular envío exitoso
-    fb.className = 'form-feedback success';
-    fb.textContent = '✅ ¡Solicitud enviada con éxito! Te contactaremos en menos de 24 horas.';
-    this.reset();
-    fb.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+
+    // Mouse
+    wrapper.addEventListener('mousedown', e => { dragging = true; setPosition(e.clientX); });
+    document.addEventListener('mousemove', e => { if (dragging) setPosition(e.clientX); });
+    document.addEventListener('mouseup',   () => { dragging = false; });
+
+    // Touch
+    wrapper.addEventListener('touchstart', e => {
+        dragging = true;
+        setPosition(e.touches[0].clientX);
+    }, { passive: true });
+    document.addEventListener('touchmove', e => {
+        if (dragging) setPosition(e.touches[0].clientX);
+    }, { passive: true });
+    document.addEventListener('touchend', () => { dragging = false; });
 });
+
+/* ══════════════════════════════════════
+   LIGHTBOX — ver foto completa
+══════════════════════════════════════ */
+(function () {
+    const lb      = document.getElementById('lightbox');
+    const lbImg   = document.getElementById('lightbox-img');
+    const lbLabel = document.getElementById('lightbox-label');
+    const lbClose = document.getElementById('lightbox-close');
+
+    function openLightbox(src, label) {
+        lbImg.src = src;
+        lbImg.alt = label || '';
+        lbLabel.textContent = label || '';
+        lb.classList.add('open');
+        document.body.style.overflow = 'hidden';
+    }
+    function closeLightbox() {
+        lb.classList.remove('open');
+        lbImg.src = '';
+        document.body.style.overflow = '';
+    }
+
+    lbClose.addEventListener('click', closeLightbox);
+    lb.addEventListener('click', e => { if (e.target === lb) closeLightbox(); });
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
+
+    /* Fotos extra — abre lightbox al hacer clic */
+    document.querySelectorAll('.extra-photo').forEach(img => {
+        img.addEventListener('click', () => openLightbox(img.src, img.alt));
+    });
+
+    /* Agregar botón expandir en cada compare-wrapper */
+    document.querySelectorAll('[data-compare]').forEach(wrapper => {
+        const afterImg  = wrapper.querySelector('.compare-after');
+        const beforeImg = wrapper.querySelector('.compare-before');
+        if (!afterImg && !beforeImg) return;
+
+        const btn = document.createElement('button');
+        btn.className = 'expand-btn';
+        btn.title = 'Ver foto completa';
+        btn.innerHTML = '⛶';
+        btn.addEventListener('click', e => {
+            e.stopPropagation();
+            /* Muestra la imagen que esté más visible según el clip del after */
+            const clip = afterImg ? afterImg.style.clipPath : '';
+            const pct  = clip ? parseFloat(clip.match(/inset\(0 ([\d.]+)%/)?.[1] ?? '50') : 50;
+            const showAfter = pct < 50; // más de la mitad muestra "después"
+            const img = (showAfter && afterImg) ? afterImg : (beforeImg || afterImg);
+            openLightbox(img.src, img.alt);
+        });
+        wrapper.appendChild(btn);
+    });
+})();
 </script>
 </body>
 </html>
